@@ -1,0 +1,14 @@
+.server-error {
+  margin-top: 40vh;
+  text-align: center;
+}
+
+.server-error__explain {
+  margin-top: 1.6rem;
+  text-align: center;
+}
+
+.link--back {
+  margin-top: 20vh;
+  text-align: center;
+}

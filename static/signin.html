@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Сhat</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Inter:500,600" rel="stylesheet">
+</head>
+  <body>
+    <main class="container container__signin">
+      <h2 class="signin__header">
+        Регистрация
+      </h2>
+      <form class="form js-form" action="#" method="post">
+        <div class="form__group">
+          <label class="i-visually-hidden" for="email">Почта</label>
+          <input class="form__input"
+                 id="email"
+                 type="email"
+                 placeholder="Почта"
+                 name="email"
+                 required>
+          <span class="form__label--floated">Почта</span>
+        </div>
+        <div class="form__group">
+          <label class="i-visually-hidden" for="login">Логин</label>
+          <input class="form__input"
+                 id="login"
+                 type="text"
+                 placeholder="Логин"
+                 name="login"
+                 required>
+          <span class="form__label--floated">Логин</span>
+        </div>
+        <div class="form__group">
+          <label class="i-visually-hidden" for="first_name">Имя</label>
+          <input class="form__input"
+                 id="first_name"
+                 type="text"
+                 placeholder="Имя"
+                 name="first_name"
+                 required>
+          <span class="form__label--floated">Имя</span>
+        </div>
+        <div class="form__group">
+          <label class="i-visually-hidden" for="second_name">Фамилия</label>
+          <input class="form__input"
+                 id="second_name"
+                 type="text"
+                 placeholder="Фамилия"
+                 name="second_name"
+                 required>
+          <span class="form__label--floated">Фамилия</span>
+        </div>
+        <div class="form__group">
+          <label class="i-visually-hidden" for="phone">Телефон</label>
+          <input class="form__input"
+                 id="phone" type="tel"
+                 placeholder="+7(999)999-99-99"
+                 name="phone"
+                 required
+                 pattern="\+7\(9[0-9]{2}\)[0-9]{3}-[0-9]{2}-[0-9]{2}">
+          <span class="form__label--floated">Телефон</span>
+        </div>
+        <div class="form__group">
+          <label class="i-visually-hidden" for="password">Пароль</label>
+          <input class="form__input"
+                 id="password"
+                 type="password"
+                 placeholder="Пароль"
+                 name="password"
+                 required>
+          <span class="form__label--floated">Пароль</span>
+        </div>
+        <div class="form__group">
+          <label class="i-visually-hidden" for="password_repeat">Пароль (еще раз)</label>
+          <input class="form__input"
+                 id="password_repeat"
+                 type="password"
+                 placeholder="Пароль (еще раз)"
+                 required>
+          <span class="form__label--floated">Пароль (еще раз)</span>
+        </div>
+        <span class="form__field--invalid">Пароли не совпадают</span>
+        <button class="button signin__button" type="submit">Зарегистрироваться</button>
+      </form>
+      <a class="link" href="login.html">Войти</a>
+    </main>
+    <script async src="./js/index.js"></script>
+  </body>
+</html>

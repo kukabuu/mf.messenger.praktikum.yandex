@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Сhat</title>
+  <link rel="stylesheet" href="./сss/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Inter:500,600" rel="stylesheet">
+</head>
+<body>
+  <aside>
+    <a href="profile.html">Профиль</a>
+    <form action="#" class="chat__search">
+      <label class="i-display-none" for="search">Поиск</label>
+      <input class="chat__search" id="search" type="text">
+    </form>
+    <ul class="chat__list">
+      <li class="list__item">
+        <img src="" alt="" class="item__image">
+        <p class="item__name">
+          Андрей
+        </p>
+        <p class="item__message">
+          <span class="item__message--from-you">Вы:</span>
+          Друзья! У меня для вас особенный выпуск новостей! О да, вы такого еще не слышали.
+        </p>
+        <span class="item__time">18:30</span>
+        <span class="item__message-counter">2</span>
+      </li>
+    </ul>
+  </aside>
+  <div class="chat__dialog">
+    <div class="dialog--empty">
+      Выберите чат, чтобы отправить сообщение
+    </div>
+    <header class=dialog__header">
+      <img src="" alt="" class="chat person__image">
+      <p class="dialog person__name">
+        Андрей
+      </p>
+      <button class="dialog__settings"></button>
+      <div class="dialog__tooltip">
+        <ul class="dialog__options">
+          <li class="dialog__option">
+            <a class="option__link" href="#">Добавить пользователя</a>
+          </li>
+          <li class="dialog__option">
+            <a class="option__link" href="#">Удалить пользователя</a>
+          </li>
+          <li class="dialog__option">
+            <a class="option__link" href="#">Удалить чат</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <main class="chat__main">
+      <span class="dialog__date">
+        1 ноября
+      </span>
+      <div class="dialog__message message__from-another">
+        <img src="" alt="" class="dialog person__image">
+        <p class="message--from-other">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          Accusamus animi architecto at cum eos esse et, hic impedit,
+          laboriosam neque odit placeat quasi quidem rem sed similique
+          suscipit tempore, voluptas? Accusamus blanditiis
+          excepturi fuga fugit, illo ipsum nesciunt odit omnis pariatur
+          quisquam, reiciendis, rerum sapiente unde vitae voluptatibus?
+          Alias beatae commodi distinctio est maxime mollitia nemo repellat
+          repudiandae sequi voluptatibus. Distinctio itaque
+          perferendis perspiciatis quis quo suscipit tempore voluptate?
+          Commodi deserunt dicta et ex impedit iusto magnam maxime repellat.
+          Alias dignissimos ducimus ea esse maxime necessitatibus neque numquam,
+          ut voluptas.
+        </p>
+        <span class="dialog__time"></span>
+      </div>
+      <div class="dialog__message message--from-another">
+        <img src="" alt="" class="dialog person__image">
+        <p class="message message__text">Бла Бла бЛа</p>
+        <span class="dialog__time dialog__time--dark"></span>
+      </div>
+      <div class="dialog__message message--from-you">
+        <p class="message message__text">Круто!</p>
+        <span class="message__delivery"></span>
+        <span class="dialog__time dialog__time"></span>
+      </div>
+    </main>
+    <footer class="dialog__footer">
+      <button class="dialog__add"></button>
+      <div class="dialog__tooltip">
+        <ul class="dialog__options">
+          <li class="dialog__option">
+            <a class="option__link" href="#">Фото или Видео</a>
+          </li>
+          <li class="dialog__option">
+            <a class="option__link" href="#">Файл</a>
+          </li>
+          <li class="dialog__option">
+            <a class="option__link" href="#">Локация</a>
+          </li>
+        </ul>
+      </div>
+      <textarea name="dialog__footer--message message"
+                id="message"
+                cols="30"
+                rows="10"
+                placeholder="Сообщение"></textarea>
+      <button class="message__send"></button>
+    </footer>
+  </div>
+<script async src="js/index.js"></script>
+</body>
+</html>

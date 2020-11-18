@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Сhat</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Inter:500,600" rel="stylesheet">
+</head>
+<body>
+  <main class="container container__profile">
+    <div class="profile__avatar">
+      <img class="avatar" src="./images/profile_blob.png" alt="Аватар" width="130">
+      <div class="avatar__link">
+        <a class="link link__text" href="#popup-update-avatar">
+          Поменять аватар
+        </a>
+      </div>
+    </div>
+    <h2 class="profile__header">
+      Иван
+    </h2>
+    <form class="form profile__form js-form" action="#" method="post">
+      <div class="form__group profile__group">
+        <label class="form__label profile__label" for="email">Почта</label>
+        <input class="form__input profile__input"
+               id="email"
+               type="email"
+               name="email"
+               value="pochta@yandex.ru"
+               readonly>
+      </div>
+      <div class="form__group profile__group">
+        <label class="form__label profile__label" for="login">Логин</label>
+        <input class="form__input profile__input"
+               id="login"
+               type="text"
+               name="login"
+               value="Ivan"
+               readonly>
+      </div>
+      <div class="form__group profile__group">
+        <label class="form__label profile__label" for="first_name">Имя</label>
+        <input class="form__input profile__input"
+               id="first_name"
+               type="text"
+               name="first_name"
+               value="Иван"
+               readonly>
+      </div>
+      <div class="form__group profile__group">
+        <label class="form__label profile__label" for="second_name">Фамилия</label>
+        <input class="form__input profile__input"
+               id="second_name"
+               type="text"
+               name="second_name"
+               value="Иванов"
+               readonly>
+      </div>
+      <div class="form__group profile__group">
+        <label class="form__label profile__label" for="display_name">Имя в чате</label>
+        <input class="form__input profile__input"
+               id="display_name"
+               type="text"
+               name="display_name"
+               value="Ivan"
+               readonly>
+      </div>
+      <div class="form__group profile__group">
+        <label class="form__label profile__label" for="phone">Телефон</label>
+        <input class="form__input profile__input"
+               id="phone"
+               type="tel"
+               name="phone"
+               value="+7(999)999-99-99"
+               readonly>
+      </div>
+    </form>
+    <div class="profile__footer">
+      <a class="link profile__link" href="edit-profile.html">Изменить данные</a>
+      <a class="link profile__link" href="change-password.html">Изменить пароль</a>
+      <a class="link profile__link link--exit" href="login.html">Выйти</a>
+    </div>
+    <a class="profile__button button--back" href="505.html">
+      <img src="./images/Back.png" alt="Назад" width="28">
+    </a>
+  </main>
+  <div class="profile__popup" id="popup-update-avatar">
+    <div class="popup">
+      <h2 class="popup__header">
+        Загрузите файл
+      </h2>
+      <a class="popup--close" href="#">&times;</a>
+      <form class="form js-form" action="#" method="post">
+        <div class="form__group popup__form-group">
+          <label class="form__label popup__label js-file-upload--label" for="avatar">Выбрать файл на компьютере</label>
+          <span class="input__file-name i-display-none js-file-name"></span>
+          <input class="form__input--file js-file-upload"
+                 id="avatar"
+                 type="file"
+                 name="avatar"
+                 required>
+        </div>
+        <button class="button popup__button" type="submit">Поменять</button>
+        <span class="form__field--invalid popup--error i-display-none">Нужно выбрать файл</span>
+      </form>
+    </div>
+  </div>
+  <script async src="./js/index.js"></script>
+</body>
+</html>
