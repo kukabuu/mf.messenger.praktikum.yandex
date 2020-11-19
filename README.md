@@ -7,4 +7,5 @@ https://vigilant-goldwasser-886a78.netlify.app
 
 
 ## Установка
-`npm start` - запуск версии для разработчика
+`npm start` - запуск версии для разработчика на `localhost:3000`
+
