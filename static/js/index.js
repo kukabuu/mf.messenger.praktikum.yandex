@@ -4,17 +4,19 @@
 })()
 
 function collectFormData() {
-  const $form = document.querySelector('.js-form');
-  const formFields = {};
-  if ($form) {
-    $form.onsubmit = (e) => {
-      e.preventDefault();
-      const formData = new FormData($form);
-      for(let pair of formData.entries()) {
-        formFields[pair[0]] = pair[1];
-      }
-      console.log(formFields);
-    };
+  const $forms = document.querySelectorAll('.js-form');
+  if ($forms) {
+    [...$forms].forEach(($form) => {
+      $form.addEventListener('submit', (e) => {
+        const formFields = {};
+        e.preventDefault();
+        const formData = new FormData($form);
+        for (let pair of formData.entries()) {
+          formFields[pair[0]] = pair[1];
+        }
+        console.log(formFields);
+      });
+    });
   }
 }
 

@@ -8,3 +8,7 @@
   border-radius: .8rem;
   border: none;
 }
+
+.button--send {
+  transform: rotate(180deg);
+}

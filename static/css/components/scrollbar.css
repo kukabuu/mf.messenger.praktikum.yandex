@@ -1,0 +1,12 @@
+.scrollbar::-webkit-scrollbar {
+  width: .5em;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: var(--color-tertiary-dark);
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-hover);
+  outline: none;
+}

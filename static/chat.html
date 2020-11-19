@@ -6,110 +6,296 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Сhat</title>
-  <link rel="stylesheet" href="./сss/main.css">
   <link href="https://fonts.googleapis.com/css?family=Inter:500,600" rel="stylesheet">
+  <link rel="stylesheet" href="./css/main.css">
 </head>
-<body>
-  <aside>
-    <a href="profile.html">Профиль</a>
-    <form action="#" class="chat__search">
-      <label class="i-display-none" for="search">Поиск</label>
-      <input class="chat__search" id="search" type="text">
+<body class="chat">
+  <aside class="chat__aside">
+    <a class="chat__link" href="profile.html">Профиль</a>
+    <form action="#" class="chat__search search">
+      <label class="i-visually-hidden" for="search">Поиск</label>
+      <input class="search__input" id="search" type="text" placeholder="Поиск">
+      <span class="search__icon"></span>
     </form>
-    <ul class="chat__list">
+    <ul class="list scrollbar">
       <li class="list__item">
-        <img src="" alt="" class="item__image">
-        <p class="item__name">
-          Андрей
-        </p>
-        <p class="item__message">
-          <span class="item__message--from-you">Вы:</span>
-          Друзья! У меня для вас особенный выпуск новостей! О да, вы такого еще не слышали.
-        </p>
+        <img class="item__image" src="images/user_blob.png" alt="Андрей" width="48">
+        <div class="item__details">
+          <span class="item__name">
+            Андрей
+          </span>
+          <span class="item__message">
+            <span class="item__message--from-you i-display-none">Вы:</span>
+            Друзья! У меня для вас особенный выпуск новостей! О да, вы такого еще не слышали.
+          </span>
+        </div>
+        <span class="item__time">18:30</span>
+        <span class="item__message-counter">2</span>
+      </li>
+      <li class="list__item">
+        <img class="item__image" src="images/user_blob.png" alt="Непутевые заметки" width="48">
+        <div class="item__details">
+          <span class="item__name">
+            Непутевые заметки
+          </span>
+          <span class="item__message">
+            <span class="item__message--from-you">Вы: </span>Классная история!
+          </span>
+        </div>
+        <span class="item__time">1 ноября</span>
+        <span class="item__message-counter i-display-none"></span>
+      </li>
+      <li class="list__item">
+        <img class="item__image" src="images/user_blob.png" alt="Андрей" width="48">
+        <div class="item__details">
+          <span class="item__name">
+            Андрей
+          </span>
+          <span class="item__message">
+            <span class="item__message--from-you i-display-none">Вы:</span>
+            Друзья! У меня для вас особенный выпуск новостей! О да, вы такого еще не слышали.
+          </span>
+        </div>
+        <span class="item__time">Ср</span>
+        <span class="item__message-counter">8</span>
+      </li>
+      <li class="list__item">
+        <img class="item__image" src="images/user_blob.png" alt="Андрей" width="48">
+        <div class="item__details">
+          <span class="item__name">
+            Андрей
+          </span>
+          <span class="item__message">
+            <span class="item__message--from-you i-display-none">Вы:</span>
+            Друзья! У меня для вас особенный выпуск новостей! О да, вы такого еще не слышали.
+          </span>
+        </div>
+        <span class="item__time">18:30</span>
+        <span class="item__message-counter">2</span>
+      </li>
+      <li class="list__item">
+        <img class="item__image" src="images/user_blob.png" alt="Андрей" width="48">
+        <div class="item__details">
+          <span class="item__name">
+            Андрей
+          </span>
+          <span class="item__message">
+            <span class="item__message--from-you i-display-none">Вы:</span>
+            Друзья! У меня для вас особенный выпуск новостей! О да, вы такого еще не слышали.
+          </span>
+        </div>
+        <span class="item__time">18:30</span>
+        <span class="item__message-counter">2</span>
+      </li>
+      <li class="list__item">
+        <img class="item__image" src="images/user_blob.png" alt="Андрей" width="48">
+        <div class="item__details">
+          <span class="item__name">
+            Андрей
+          </span>
+          <span class="item__message">
+            <span class="item__message--from-you i-display-none">Вы:</span>
+            Друзья! У меня для вас особенный выпуск новостей! О да, вы такого еще не слышали.
+          </span>
+        </div>
+        <span class="item__time">18:30</span>
+        <span class="item__message-counter">2</span>
+      </li>
+      <li class="list__item">
+        <img class="item__image" src="images/user_blob.png" alt="Андрей" width="48">
+        <div class="item__details">
+          <span class="item__name">
+            Андрей
+          </span>
+          <span class="item__message">
+            <span class="item__message--from-you i-display-none">Вы:</span>
+            Друзья! У меня для вас особенный выпуск новостей! О да, вы такого еще не слышали.
+          </span>
+        </div>
+        <span class="item__time">18:30</span>
+        <span class="item__message-counter">2</span>
+      </li>
+      <li class="list__item">
+        <img class="item__image" src="images/user_blob.png" alt="Андрей" width="48">
+        <div class="item__details">
+          <span class="item__name">
+            Андрей
+          </span>
+          <span class="item__message">
+            <span class="item__message--from-you i-display-none">Вы:</span>
+            Друзья! У меня для вас особенный выпуск новостей! О да, вы такого еще не слышали.
+          </span>
+        </div>
         <span class="item__time">18:30</span>
         <span class="item__message-counter">2</span>
       </li>
     </ul>
   </aside>
-  <div class="chat__dialog">
-    <div class="dialog--empty">
+  <div class="chat__dialog dialog">
+    <span class="dialog--empty i-display-none">
       Выберите чат, чтобы отправить сообщение
-    </div>
-    <header class=dialog__header">
-      <img src="" alt="" class="chat person__image">
-      <p class="dialog person__name">
+    </span>
+    <header class="dialog__header">
+      <div class="dialog__person">
+        <img class="person__image" src="images/user_blob.png" alt="Андрей" width="34" height="34">
+        <span class="person__name">
         Андрей
-      </p>
-      <button class="dialog__settings"></button>
-      <div class="dialog__tooltip">
+      </span>
+      </div>
+      <div class="dialog__settings">
+        <span class="burger"></span>
+      </div>
+      <div class="dialog__tooltip tooltip--settings">
         <ul class="dialog__options">
           <li class="dialog__option">
-            <a class="option__link" href="#">Добавить пользователя</a>
+            <a class="option__link option--add-user" href="#popup-add-user">Добавить пользователя</a>
           </li>
           <li class="dialog__option">
-            <a class="option__link" href="#">Удалить пользователя</a>
+            <a class="option__link option--remove-user" href="#popup-remove-user">Удалить пользователя</a>
           </li>
           <li class="dialog__option">
-            <a class="option__link" href="#">Удалить чат</a>
+            <a class="option__link option--delete-chat" href="#popup-chat-delete">Удалить чат</a>
           </li>
         </ul>
       </div>
     </header>
-    <main class="chat__main">
+    <main class="dialog__main scrollbar">
       <span class="dialog__date">
         1 ноября
       </span>
-      <div class="dialog__message message__from-another">
-        <img src="" alt="" class="dialog person__image">
-        <p class="message--from-other">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Accusamus animi architecto at cum eos esse et, hic impedit,
-          laboriosam neque odit placeat quasi quidem rem sed similique
-          suscipit tempore, voluptas? Accusamus blanditiis
-          excepturi fuga fugit, illo ipsum nesciunt odit omnis pariatur
-          quisquam, reiciendis, rerum sapiente unde vitae voluptatibus?
-          Alias beatae commodi distinctio est maxime mollitia nemo repellat
-          repudiandae sequi voluptatibus. Distinctio itaque
-          perferendis perspiciatis quis quo suscipit tempore voluptate?
-          Commodi deserunt dicta et ex impedit iusto magnam maxime repellat.
-          Alias dignissimos ducimus ea esse maxime necessitatibus neque numquam,
-          ut voluptas.
-        </p>
-        <span class="dialog__time"></span>
+      <div class="dialog__message message--left">
+        <img class="message--image person__image" src="images/user_blob.png" alt="Андрей" width="34" height="34">
+        <div class="message message--from">
+          <span>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Accusamus animi architecto at cum eos esse et, hic impedit,
+            laboriosam neque odit placeat quasi quidem rem sed similique
+            suscipit tempore, voluptas? Accusamus blanditiis
+            excepturi fuga fugit, illo ipsum nesciunt odit omnis pariatur
+            quisquam, reiciendis, rerum sapiente unde vitae voluptatibus?
+            Alias beatae commodi distinctio est maxime mollitia nemo repellat
+            repudiandae sequi voluptatibus. Distinctio itaque
+            perferendis perspiciatis quis quo suscipit tempore voluptate?
+            Commodi deserunt dicta et ex impedit iusto magnam maxime repellat.
+            Alias dignissimos ducimus ea esse maxime necessitatibus neque numquam,
+            ut voluptas.
+          </span>
+          <span class="message__time">20:00</span>
+        </div>
       </div>
-      <div class="dialog__message message--from-another">
-        <img src="" alt="" class="dialog person__image">
-        <p class="message message__text">Бла Бла бЛа</p>
-        <span class="dialog__time dialog__time--dark"></span>
+
+      <div class="dialog__message message--left">
+        <img class="person__image"
+             src="images/user_blob.png"
+             alt="Андрей"
+             width="34"
+             height="34">
+        <div class="message message--from attachment">
+          <img class="attachment--image" src="images/cat.jpg" alt="Кот">
+          <span class="message__time time--dark">20:00</span>
+        </div>
+
       </div>
-      <div class="dialog__message message--from-you">
-        <p class="message message__text">Круто!</p>
-        <span class="message__delivery"></span>
-        <span class="dialog__time dialog__time"></span>
+
+      <div class="dialog__message message--right">
+        <div class="message message--yours">
+          <span>Круто!</span>
+          <span class="message__delivery"></span>
+          <span class="message__time time--blue">21:00</span>
+        </div>
       </div>
     </main>
     <footer class="dialog__footer">
-      <button class="dialog__add"></button>
-      <div class="dialog__tooltip">
+      <button class="dialog__button dialog__attachments">
+        <img src="./images/attach.png" alt="Добавить" width="32" height="32">
+      </button>
+      <div class="dialog__tooltip tooltip--attachments">
         <ul class="dialog__options">
           <li class="dialog__option">
-            <a class="option__link" href="#">Фото или Видео</a>
+            <a class="option__link option--add-foto" href="#popup-upload-file">Фото или Видео</a>
           </li>
           <li class="dialog__option">
-            <a class="option__link" href="#">Файл</a>
-          </li>
-          <li class="dialog__option">
-            <a class="option__link" href="#">Локация</a>
+            <a class="option__link option--add-file" href="#popup-upload-file">Файл</a>
           </li>
         </ul>
       </div>
-      <textarea name="dialog__footer--message message"
-                id="message"
-                cols="30"
-                rows="10"
-                placeholder="Сообщение"></textarea>
-      <button class="message__send"></button>
+      <form class="dialog__form js-form" action="#">
+        <input class="dialog__footer--message"
+               type="text"
+               name="message"
+               placeholder="Сообщение"
+               required>
+        <button class="dialog__button" type="submit">
+          <img class="button--send" src="./images/back.png" alt="Добавить" width="28" height="28">
+        </button>
+      </form>
     </footer>
+  </div>
+  <div class="chat__popup" id="popup-remove-user">
+    <div class="popup">
+      <h2 class="popup__header">
+        Удалить пользователя
+      </h2>
+      <a class="popup--close" href="#">&times;</a>
+      <form class="form js-form" action="#">
+        <div class="form__group">
+          <label class="i-visually-hidden" for="login-remove">Логин</label>
+          <input class="form__input" id="login-remove" type="text" placeholder="Логин" name="login" required>
+          <span class="form__label--floated">Логин</span>
+        </div>
+        <button class="button chat__button--toggle-user" type="submit">Удалить</button>
+      </form>
+    </div>
+  </div>
+  <div class="chat__popup" id="popup-chat-delete">
+    <div class="popup">
+      <h2 class="popup__header">
+        Удалить чат?
+      </h2>
+      <a class="popup--close" href="#">&times;</a>
+      <form class="form js-form" action="#">
+        <input type="text" name="chatId" value="1234" hidden>
+        <button class="button chat__button--delete" type="submit">Удалить</button>
+        <button class="button chat__button--cancel" type="reset">Не удалять</button>
+      </form>
+    </div>
+  </div>
+  <div class="chat__popup" id="popup-add-user">
+    <div class="popup">
+      <h2 class="popup__header">
+        Добавить пользователя
+      </h2>
+      <a class="popup--close" href="#">&times;</a>
+      <form class="form js-form" action="#">
+        <div class="form__group">
+          <label class="i-visually-hidden" for="login-add">Логин</label>
+          <input class="form__input" id="login-add" type="text" placeholder="Логин" name="login" required>
+          <span class="form__label--floated">Логин</span>
+        </div>
+        <button class="button chat__button--toggle-user" type="submit">Добавить</button>
+      </form>
+    </div>
+  </div>
+  <div class="chat__popup" id="popup-upload-file">
+    <div class="popup">
+      <h2 class="popup__header">
+        Загрузите файл
+      </h2>
+      <a class="popup--close" href="#">&times;</a>
+      <form class="form js-form" action="#">
+        <div class="form__group popup__form-group">
+          <label class="form__label popup__label js-file-upload--label" for="file">Выбрать файл на компьютере</label>
+          <span class="input__file-name i-display-none js-file-name"></span>
+          <input class="form__input--file js-file-upload"
+                 id="file"
+                 type="file"
+                 name="file"
+                 required>
+        </div>
+        <button class="button popup__button" type="submit">Поменять</button>
+        <span class="form__field--invalid popup--error i-display-none">Нужно выбрать файл</span>
+      </form>
+    </div>
   </div>
 <script async src="js/index.js"></script>
 </body>

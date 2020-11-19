@@ -1,27 +1,19 @@
 :root {
-   /* COLORS */
-  --color-primary: #3369F3;
+  /* COLORS */
+  --color-primary: #3369f3;
   --color-error: #FF2F2F;
 
   --color-secondary-dark: #525252;
   --color-secondary: #999999;
   --color-secondary-light: #EAEAEA;
-  
+
   --color-tertiary-dark: #EFEFEF;
-  --color-tertiary:#F8F8F8;
+  --color-tertiary: #F8F8F8;
   --color-tertiary-light: #FBFBFB;
+
+  --color-hover: #E4EDFD;
 
   --color-white: #ffffff;
   --color-black: #1E1E1E;
-  
-/* FONT */
---default-font-size: 1.2rem;
-
-
-/* GRID */
---grid-width: 114rem;
---gutter-vertical: 8rem;
---gutter-vertical-small: 6rem;
---gutter-horizontal: 6rem;
 }
 
