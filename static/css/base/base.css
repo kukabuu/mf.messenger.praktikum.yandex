@@ -3,7 +3,7 @@
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit; 
+  box-sizing: inherit;
 }
 
 html {
@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", "Arial", sans-serif;
   font-weight: 500;
   font-size: 1.2rem;
   line-height: 1;
@@ -28,6 +28,14 @@ h1 {
 h2 {
   font-size: 2rem;
   font-weight: 500;
+}
+
+input,
+button,
+input::placeholder {
+  font-family: "Inter", "Arial", sans-serif;
+  font-weight: 500;
+  border: none;
 }
 
 input:focus {
