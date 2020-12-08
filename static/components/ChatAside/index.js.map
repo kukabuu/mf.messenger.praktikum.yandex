@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/components/ChatAside/index.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,mBAAmB,CAAC;AACtC,OAAO,EAAE,QAAQ,EAAE,MAAM,eAAe,CAAC;AAazC,MAAM,OAAO,SAAU,SAAQ,KAAK;IACnC,YAAY,KAAY;QACvB,KAAK,CAAC,KAAK,CAAC,CAAC;IACd,CAAC;IAED,MAAM;QACL,OAAO,QAAQ,CAAC;IACjB,CAAC;CACD"}

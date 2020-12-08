@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/components/DialogMessage/index.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,mBAAmB,CAAC;AACtC,OAAO,EAAE,QAAQ,EAAE,MAAM,eAAe,CAAC;AAwBzC,MAAM,OAAO,aAAc,SAAQ,KAAK;IACvC,YAAY,KAAY;QACvB,KAAK,CAAC,KAAK,CAAC,CAAC;IACd,CAAC;IAED,MAAM;QACL,OAAO,QAAQ,CAAC;IACjB,CAAC;CACD"}

@@ -1,14 +1,24 @@
-body {
+.app {
   display: flex;
   height: 100vh;
   overflow: hidden;
+}
+
+.app > div:first-child {
+  width: 31rem;
+  height: 100vh;
+}
+
+.app > div:last-child {
+  width: calc(100% - 31rem);
+  height: 100vh;
 }
 
 .chat__aside {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 31rem;
+  height: 100vh;
   background-color: var(--color-tertiary);
   padding: 1rem 0;
 }
@@ -34,7 +44,7 @@ body {
 }
 
 .chat__dialog {
-  width: calc(100% - 31rem);
+  height: 100vh;
   padding: 1rem 2rem;
 }
 
@@ -53,6 +63,7 @@ body {
 .chat__popup:target {
   visibility: visible;
   opacity: 1;
+  z-index: 1000;
 }
 
 .chat__button--cancel {

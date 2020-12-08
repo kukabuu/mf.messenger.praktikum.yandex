@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/components/EmptyDialog/index.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,mBAAmB,CAAC;AACtC,OAAO,EAAE,QAAQ,EAAE,MAAM,eAAe,CAAC;AAMzC,MAAM,OAAO,WAAY,SAAQ,KAAK;IACrC,YAAY,KAAY,EAAE,OAAO,GAAE,MAAM;QACxC,KAAK,CAAC,KAAK,EAAE,OAAO,CAAC,CAAC;IACvB,CAAC;IAED,MAAM;QACL,OAAO,QAAQ,CAAC;IACjB,CAAC;CACD"}

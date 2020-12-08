@@ -3,10 +3,9 @@
   flex-direction: column;
   position: relative;
 }
+
 .dialog--empty {
   color: var(--color-secondary);
-  align-self: center;
-  margin: auto;
 }
 
 .dialog__header {
@@ -25,6 +24,7 @@
   width: 34px;
   height: 34px;
   margin-right: 1.2rem;
+  margin-top: auto;
 }
 
 .person__name {
@@ -46,9 +46,16 @@
   overflow-x: hidden;
 }
 
+.dialog__main > span {
+  align-self: center;
+  margin: auto;
+}
+
 .dialog__date {
   margin: 2rem auto 3rem;
   color: var(--color-secondary);
+  display: block;
+  text-align: center;
 }
 
 .dialog__message {

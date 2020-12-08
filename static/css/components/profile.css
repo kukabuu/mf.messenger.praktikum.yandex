@@ -68,6 +68,14 @@
   color: var(--color-secondary);
 }
 
+.profile__field {
+  display: block;
+  margin-top: -1rem;
+  margin-left: auto;
+  text-align: end;
+  max-width: 50%;
+}
+
 .profile__group:last-child {
   border: none;
 }

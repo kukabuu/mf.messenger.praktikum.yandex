@@ -9,28 +9,10 @@
   <link href="https://fonts.googleapis.com/css?family=Inter:500,600" rel="stylesheet">
   <link rel="stylesheet" href="./css/common.css">
   <link rel="stylesheet" href="css/pages/enter-page.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
 </head>
   <body>
-    <main class="container container__enter login">
-      <h2 class="enter__header">
-        Вход
-      </h2>
-      <form class="form js-form" action="#" method="post">
-        <div class="form__group">
-          <label class="i-visually-hidden" for="login">Логин</label>
-          <input class="form__input" id="login" type="text" placeholder="Логин" name="login" required>
-          <span class="form__label--floated">Логин</span>
-        </div>
-        <div class="form__group">
-          <label class="i-visually-hidden" for="password">Пароль</label>
-          <input class="form__input" id="password" type="password" placeholder="Пароль" name="password" required>
-          <span class="form__label--floated">Пароль</span>
-        </div>
-        <span class="form__field--invalid i-visually-hidden">Неверный логин или пароль</span>
-        <button class="button login__button" type="submit">Авторизоваться</button>
-      </form>
-      <a class="link" href="signin.html">Нет аккаунта?</a>
-    </main>
-    <script async src="./js/index.js"></script>
+    <div class="app"></div>
+    <script src="./pages/Login/index.js" type="module"></script>
   </body>
 </html>
