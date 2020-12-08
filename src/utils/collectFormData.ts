@@ -1,3 +1,5 @@
+import { isValidForm} from './validation.js';
+
 type formFields = {
   [key: string]: any
 }
@@ -8,6 +10,9 @@ export function collectFormData() {
     [...$forms].forEach(($form) => {
       $form.addEventListener('submit', (e) => {
         e.preventDefault();
+        if (!isValidForm()) {
+          return;
+        }
         const formFields:formFields = {};
         const formData = new FormData($form);
         for (const pair of formData.entries()) {

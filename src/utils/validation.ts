@@ -15,6 +15,12 @@ const errorMessages = {
 	invalidPhone: 'Введите корректный номер телефона'
 }
 
+export function isValidForm() {
+	const visibleErrors = Array.from(document.querySelectorAll('.js-error'))
+		.filter(item => !item.classList.contains('i-display-none'));
+	return !visibleErrors.length;
+}
+
 export class FormValidator {
 	$form: Element | null;
 	fields: string[];
@@ -34,19 +40,18 @@ export class FormValidator {
 			return;
 		}
 		this.$form.addEventListener('submit', (event) =>{
-			event.preventDefault();
-			this.fields.forEach((field) => {
-				const $input: HTMLInputElement | null = document.querySelector(`#${field}`);
-				this.checkValidity($input);
-			})
-
-			const visibleErrors = Array.from(document.querySelectorAll('.js-error'))
-				.filter(item => !item.classList.contains('.i-display-none'));
-
-			if (visibleErrors.length) {
-				return false;
+			if (!this.checkFormValidity()) {
+				event.preventDefault();
 			}
 		})
+	}
+
+	checkFormValidity() {
+		this.fields.forEach((field) => {
+			const $input: HTMLInputElement | null = document.querySelector(`#${field}`);
+			this.checkValidity($input);
+		})
+		return isValidForm();
 	}
 
 	validateOnBlur() {

@@ -13,6 +13,11 @@ const errorMessages = {
     invalidPassword: 'Пароль должен содержать хотя бы одну заглавную букву, одну прописную и одну цифру',
     invalidPhone: 'Введите корректный номер телефона'
 };
+export function isValidForm() {
+    const visibleErrors = Array.from(document.querySelectorAll('.js-error'))
+        .filter(item => !item.classList.contains('i-display-none'));
+    return !visibleErrors.length;
+}
 export class FormValidator {
     constructor($form, fields) {
         this.$form = $form;
@@ -28,17 +33,17 @@ export class FormValidator {
             return;
         }
         this.$form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            this.fields.forEach((field) => {
-                const $input = document.querySelector(`#${field}`);
-                this.checkValidity($input);
-            });
-            const visibleErrors = Array.from(document.querySelectorAll('.js-error'))
-                .filter(item => !item.classList.contains('.i-display-none'));
-            if (visibleErrors.length) {
-                return false;
+            if (!this.checkFormValidity()) {
+                event.preventDefault();
             }
         });
+    }
+    checkFormValidity() {
+        this.fields.forEach((field) => {
+            const $input = document.querySelector(`#${field}`);
+            this.checkValidity($input);
+        });
+        return isValidForm();
     }
     validateOnBlur() {
         if (this.$form === null) {
