@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/components/ChatMain/index.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,mBAAmB,CAAC;AACtC,OAAO,EAAE,QAAQ,EAAE,MAAM,eAAe,CAAC;AA+BzC,MAAM,OAAO,QAAS,SAAQ,KAAK;IAClC,YAAY,KAAY;QACvB,KAAK,CAAC,KAAK,CAAC,CAAC;IACd,CAAC;IAED,MAAM;QACL,OAAO,QAAQ,CAAC;IACjB,CAAC;CACD"}

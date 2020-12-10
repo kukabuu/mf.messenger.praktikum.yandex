@@ -1,4 +1,189 @@
-export const props = {
+import Button from '../../components/Button/index.js';
+import Error from '../../components/Error/index.js';
+import Input from '../../components/Input/index.js';
+import Popup from '../../components/Popup/index.js';
+import concatInputs from '../../components/Input/concatInputs.js';
+import { FormValidator } from '../../utils/validation.js';
+import { collectFormData } from '../../utils/collectFormData.js';
+import { displayFileName } from '../../utils/displayFileName.js';
+const inputs = [
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Почта'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        id: 'email',
+        name: 'email',
+        type: 'email',
+        value: 'pochta@yandex.ru',
+        isReadOnly: true,
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Логин'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        id: 'login',
+        name: 'login',
+        value: 'Ivan',
+        isReadOnly: true,
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Имя'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        id: 'first_name',
+        name: 'first_name',
+        value: 'Иван',
+        isReadOnly: true,
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Фамилия'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        id: 'second_name',
+        name: 'second_name',
+        value: 'Иванов',
+        isReadOnly: true,
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Имя в чате'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        id: 'display_name',
+        name: 'display_name',
+        value: 'Ivan',
+        isReadOnly: true,
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Телефон'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        id: 'phone',
+        name: 'phone',
+        type: 'tel',
+        value: '+7(999)999-99-99',
+        isReadOnly: true,
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+];
+const popupInputProps = {
+    id: 'avatar',
+    type: 'file',
+    className: 'form__input--file js-file-upload',
+    group: {
+        className: 'popup__form-group'
+    },
+    label: {
+        className: 'form__label popup__label js-file-upload--label',
+        text: 'Выбрать файл на компьютере'
+    },
+    file: {
+        className: 'js-file-name'
+    },
+    errorEnter: new Error({
+        className: 'popup--error'
+    }).element.innerHTML,
+    floatedLabel: {
+        className: 'i-display-none'
+    }
+};
+const popupProps = {
+    header: 'Загрузите файл',
+    input: new Input(popupInputProps).element.innerHTML,
+    button: new Button({
+        text: 'Поменять',
+        type: 'submit',
+        className: 'button popup__button'
+    }).element.innerHTML,
+    eventListeners: [
+        {
+            event: 'event-listener:validate-form-file',
+            callback: () => {
+                const $form = document.querySelector('.js-form');
+                const fields = ['avatar'];
+                const validator = new FormValidator($form, fields);
+                validator.initialize();
+            }
+        },
+        {
+            event: 'event-listener:collect-form-data-file',
+            callback: () => {
+                collectFormData();
+            }
+        },
+        {
+            event: 'event-listener:display-file-name',
+            callback: () => {
+                displayFileName();
+            }
+        },
+    ]
+};
+export const profileProps = {
     header: 'Иван',
     avatar: {
         name: 'Аватар',
@@ -6,46 +191,7 @@ export const props = {
         link: '#popup-update-avatar',
         linkText: 'Поменять аватар',
     },
-    inputs: [
-        {
-            name: 'Почта',
-            id: 'email',
-            type: 'email',
-            value: 'pochta@yandex.ru',
-            isReadOnly: true
-        },
-        {
-            name: 'Логин',
-            id: 'login',
-            value: 'Ivan',
-            isReadOnly: true
-        },
-        {
-            name: 'Имя',
-            id: 'first_name',
-            value: 'Иван',
-            isReadOnly: true
-        },
-        {
-            name: 'Фамилия',
-            id: 'second_name',
-            value: 'Иванов',
-            isReadOnly: true
-        },
-        {
-            name: 'Имя в чате',
-            id: 'display_name',
-            value: 'Ivan',
-            isReadOnly: true
-        },
-        {
-            name: 'Телефон',
-            id: 'phone',
-            type: 'tel',
-            value: '+7(999)999-99-99',
-            isReadOnly: true
-        },
-    ],
+    inputs: concatInputs(inputs),
     footerLinks: [
         {
             name: 'Изменить данные',
@@ -65,20 +211,7 @@ export const props = {
         link: 'chat.html',
         text: 'Назад',
         src: './images/Back.png'
-    }
-};
-export const updateAvatarButton = {
-    text: 'Поменять',
-    className: 'button popup__button'
-};
-export const updateAvatarPopup = {
-    header: 'Загрузите файл',
-    input: {
-        name: 'Выбрать файл на компьютере',
-        id: 'avatar',
-        type: 'file',
-        isRequired: true,
-        className: 'js-file-upload'
-    }
+    },
+    popup: new Popup(popupProps).element.innerHTML,
 };
 //# sourceMappingURL=mock.js.map

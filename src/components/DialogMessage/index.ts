@@ -1,34 +1,84 @@
-import Block from '../Block/index.js';
-import { template } from './template.js';
+import Block from '../../core/Block/index.js';
 
-type props = {
-	type?: string,
+import { template } from './template.js';
+import compile from '../../utils/compile.js';
+
+export type MessageProps = {
+	isEmpty?: boolean
+	empty?: {
+		text?: string
+	}
+	from?: boolean
 	position: {
-		[key: string] : string | boolean
+		className: string
 	},
 	person?: {
-		[key: string] : string
+		src?: string
+		name?: string
 	},
-	message: {
-		type?: string,
-		className: string,
-		content: {
-			[key: string] : string
-		} | string
+	isAttachment?: boolean
+	attachment?: {
+		src?: string
+		name?: string
+		className?: string
+	}
+	message?: {
+		className?: string
+		content?: string
 	},
+	date?: {
+		value?: string
+		className?: string
+	}
 	time: {
-		full: string,
-		less: string,
-		date?: string
+		full: string
+		less: string
 	}
 };
 
-export class DialogMessage extends Block {
-	constructor(props: props) {
-		super(props);
+export default class DialogMessage extends Block {
+	constructor(
+		{
+			isEmpty = false,
+			empty = {
+				text: 'Выберите чат, чтобы отправить сообщение'
+			},
+			from = false,
+			person = {
+				src: '',
+				name: ''
+			},
+			isAttachment = false,
+			attachment = {
+				src: '',
+				name: '',
+				className: 'i-display-none'
+			},
+			message = {
+				className: '',
+				content: ''
+			},
+			date = {
+				value: '',
+				className: 'i-display-none'
+			},
+			...props
+		}: MessageProps
+	) {
+		super({
+			isEmpty,
+			empty,
+			from,
+			person,
+			isAttachment,
+			attachment,
+			message,
+			date,
+			...props
+		});
 	}
 
 	render() {
-		return template;
+		return compile(template, this.props);
 	}
 }

@@ -1,39 +1,41 @@
-import Block from '../Block/index.js';
-import { toggleUserPopup, deleteChatPopup, uploadFile } from './template.js';
+import Block from '../../core/Block/index.js';
 
-type props = {
-	header: string,
-	input: {
-		[key: string] : string | boolean
-	}
+import { template } from './template.js';
+import { globalEventBus } from '../../core/GlobalEventBus/index.js';
+import compile from '../../utils/compile.js';
+
+type EventListener = {
+	event: string,
+	callback: () => void
+}
+
+type PopupProps = {
+	header: string
+	input: string
+	button: string
+	cancelButton?: string
+	eventListeners?: EventListener[]
 };
 
-export class UserPopup extends Block {
-	constructor(props: props) {
-		super(props);
+export default class Popup extends Block {
+	constructor(
+		{
+			eventListeners = [],
+			cancelButton = '',
+			...props
+		}: PopupProps) {
+		super({
+			eventListeners,
+			cancelButton,
+			...props
+		});
+
+		eventListeners.forEach((listener) => {
+			globalEventBus.on(listener['event'], listener['callback'])
+		})
 	}
 
 	render() {
-		return toggleUserPopup;
-	}
-}
-
-export class ChatPopup extends Block {
-	constructor(props: props) {
-		super(props);
-	}
-
-	render() {
-		return deleteChatPopup;
-	}
-}
-
-export class UploadFilePopup extends Block {
-	constructor(props: props) {
-		super(props);
-	}
-
-	render() {
-		return uploadFile;
+		return compile(template, this.props);
 	}
 }

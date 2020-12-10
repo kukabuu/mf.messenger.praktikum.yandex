@@ -1,9 +1,6 @@
 const patterns = {
 	email: /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
-	phone: /^\+7\(9[0-9]{2}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/,
-	passwordCapitalLetter: /[A-Z]+/g,
-	passwordLowercaseLetter: /[a-z]+/g,
-	passwordNumber: /[0-9]+/g,
+	phone: /^\+7\(9[0-9]{2}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/
 }
 
 const errorMessages = {
@@ -11,7 +8,6 @@ const errorMessages = {
 	notTheSamePasswords: 'Пароли не совпадают',
 	emptyFile: 'Нужно выбрать файл',
 	invalidEmail: 'Введите корректную почту',
-	invalidPassword: 'Пароль должен содержать хотя бы одну заглавную букву, одну прописную и одну цифру',
 	invalidPhone: 'Введите корректный номер телефона'
 }
 
@@ -109,17 +105,6 @@ export class FormValidator {
 				this.setStatus($input, null, 'success');
 			}
 		}
-
-		/*// проверить на валидность пароля
-		if ($input.id === 'password') {
-			if (!patterns.passwordCapitalLetter.test($input.value)
-			&& !patterns.passwordLowercaseLetter.test($input.value)
-			&& !patterns.passwordNumber.test($input.value)) {
-				this.setStatus($input, errorMessages.invalidPassword, 'error');
-			} else {
-				this.setStatus($input, null, 'success');
-			}
-		}*/
 
 		// проверить на совпадение паролей
 		if ($input.id === 'password-repeat') {

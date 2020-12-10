@@ -1,5 +1,4 @@
-export const buttonTemplate = `        
-	<button class="{{className}}" 
-					{{#if type}}type="{{type}}" {{else}} type="submit" {{/if}}>
-	{{text}}
+export const template = `        
+	<button class="{{className}}" type="{{type}}">
+			{{text}}
 	</button>`;

@@ -1,31 +1,45 @@
-import Block from '../Block/index.js';
+import Block from '../../core/Block/index.js';
 import { template } from './template.js';
 
-type props = {
+import compile from '../../utils/compile.js';
+
+export type ListItemProps = {
 	avatar: {
-		[key: string]: string
-	},
-	name: string,
-	from: {
-		text: string,
-		className?: string,
-	},
-	message: {
-		counter?: string | number,
-		className?: string,
-		preview: string
-	},
+		src: string
+		name: string
+	}
+	name: string
+	preview: string
 	time: {
-		[key: string]: string
+		full: string
+		less: string
+	}
+	from?: {
+		text?: string
+		className?: string
+	}
+	counter?: {
+		value?: string | number
+		className?: string
 	}
 };
 
-export class ChatListItem extends Block {
-	constructor(props: props) {
-		super(props);
+export default class ChatListItem extends Block {
+	constructor({
+		from = {
+			text: 'Вы:',
+			className: 'i-display-none'
+		},
+		counter = {
+			value: '',
+			className: 'i-display-none'
+		},
+		 ...props
+	}: ListItemProps) {
+		super({from, counter, ...props});
 	}
 
 	render() {
-		return template;
+		return compile(template, this.props);
 	}
 }

@@ -1,10 +1,3 @@
-type props = {
-	error: string | number,
-	errorText: string,
-	backLink: string,
-	backText: string
-}
-
 const props = {
 	error: '500',
 	errorText: 'Мы уже фиксим',

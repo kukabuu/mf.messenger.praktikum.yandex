@@ -1,4 +1,5 @@
-import ServerError from '../../components/ServerError/index.js';
+import ServerError from '../../core/ServerError/index.js';
+
 import { render } from '../../utils/render.js';
 import props from './mock.js';
 

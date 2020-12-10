@@ -13,19 +13,9 @@ export const template = `
     <h2 class="profile__header">
       {{header}}
     </h2>
-    <form class="form profile__form" action="#" method="post">
-    	{{#each inputs}}
-				<div class="form__group profile__group">
-					<label class="form__label profile__label" for="{{id}}">{{name}}</label>
-					<input class="form__input profile__input {{className}}"
-								 id="{{id}}"
-								 type="{{#if type}}{{type}}{{else}}text{{/if}}"
-								 placeholder="{{#if placeholder}}{{placeholder}}{{/if}}"
-								 name="{{id}}"
-								 value="{{value}}"
-								 {{#if isReadOnly}}readonly{{/if}}>
-				</div>
-			{{/each}}
+    <form class="form profile__form {{form.className}}" action="#" method="{{form.method}}">
+    	{{{inputs}}}
+    	{{{button}}}
     </form>
     <div class="profile__footer">
     	{{#each footerLinks}}
@@ -36,5 +26,7 @@ export const template = `
       <img src="{{back.src}}" alt="{{back.text}}" width="28">
     </a>
   </main>
-  <div class="profile__popup" id="popup-update-avatar"></div>
+  <div class="profile__popup" id="popup-update-avatar">
+  	{{{popup}}}
+	</div>
 `;

@@ -1,8 +1,13 @@
 export const template = `
-	<time class="dialog__date {{#unless time.date}}i-display-none{{/unless}}" datetime="{{time.full}}">
-			{{time.date}}
+	{{#if isEmpty}}
+		<span class="dialog--empty">
+			{{empty.text}}
+		</span>
+	{{else}}
+	<time class="dialog__date {{date.className}}" datetime="{{time.full}}">
+			{{date.value}}
 	</time>
-	{{#if type}}
+	{{#if from}}
 		<div class="dialog__message">
 			<img class="message--image person__image" 
 						src="{{person.src}}" 
@@ -10,8 +15,8 @@ export const template = `
 						width="34" 
 						height="34">
 			<div class="message {{position.className}} {{message.className}}">
-			{{#if message.type}}
-				<img class="{{message.type}}" src="{{message.content.src}}" alt="{{message.content.name}}">
+			{{#if isAttachment}}
+				<img class="{{attachment.className}}" src="{{attachment.src}}" alt="{{attachment.name}}">
 			{{else}}
 				<p>
 					{{message.content}}
@@ -23,8 +28,8 @@ export const template = `
 	{{else}}
 		<div class="dialog__message">
 			<div class="message {{position.className}} {{message.className}}">
-				{{#if message.type}}
-					<img class="{{message.type}}" src="{{message.content.scr}}" alt="{{message.content.name}}">
+				{{#if isAttachment}}
+					<img class="{{attachment.className}}" src="{{attachment.src}}" alt="{{attachment.name}}">
 				{{else}}
 					<p>
 						{{message.content}}
@@ -34,5 +39,6 @@ export const template = `
 				<time class="message__time time--blue" datetime="{{time.full}}">{{time.less}}</time>
 			</div>
 		</div>
-	{{/if}}`;
+	{{/if}}
+{{/if}}`;
 //# sourceMappingURL=template.js.map

@@ -1,24 +1,12 @@
-import EditProfile from '../../components/EditProfile/index.js';
-import Button from '../../components/Button/index.js';
-
+import Profile from '../../components/Profile/index.js';
 import { render } from '../../utils/render.js';
-import { FormValidator } from '../../utils/validation.js';
-import { collectFormData } from '../../utils/collectFormData.js';
 
-import { props, buttonProps } from './mock.js';
+import { profileEditProps } from './mock.js';
+import { globalEventBus } from '../../core/GlobalEventBus/index.js';
 
 // рендерим компоненты
-const editProfilePage = new EditProfile(props);
+const editProfilePage = new Profile(profileEditProps);
 render('.app', editProfilePage);
 
-const editProfileButton = new Button(buttonProps);
-render('.js-form', editProfileButton);
-
-// добавляем валидацию
-const $form = document.querySelector('.js-form');
-const fields = ['email', 'login', 'first_name', 'second_name', 'phone', 'display_name'];
-const validator = new FormValidator($form, fields);
-validator.initialize();
-
-// добавляет обработчики событий
-collectFormData();
+globalEventBus.emit('event-listener:validate-form');
+globalEventBus.emit('event-listener:collect-form-data');

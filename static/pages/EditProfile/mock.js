@@ -1,52 +1,164 @@
-export const props = {
+import Button from '../../components/Button/index.js';
+import Error from '../../components/Error/index.js';
+import concatInputs from '../../components/Input/concatInputs.js';
+import { FormValidator } from '../../utils/validation.js';
+import { collectFormData } from '../../utils/collectFormData.js';
+const inputs = [
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Почта'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        id: 'email',
+        name: 'email',
+        type: 'email',
+        value: 'pochta@yandex.ru',
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Логин'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        id: 'login',
+        name: 'login',
+        value: 'Ivan',
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Имя'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        id: 'first_name',
+        name: 'first_name',
+        value: 'Иван',
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Фамилия'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        id: 'second_name',
+        name: 'second_name',
+        value: 'Иванов',
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Имя в чате'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        id: 'display_name',
+        name: 'display_name',
+        value: 'Ivan',
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+    {
+        label: {
+            className: 'form__label profile__label',
+            text: 'Телефон'
+        },
+        group: {
+            className: 'profile__group'
+        },
+        floatedLabel: {
+            className: 'i-display-none'
+        },
+        id: 'phone',
+        name: 'phone',
+        type: 'tel',
+        value: '+7(999)999-99-99',
+        className: 'profile__input',
+        errorProfile: new Error({
+            className: 'profile__field'
+        }).element.innerHTML
+    },
+];
+export const profileEditProps = {
     avatar: {
         name: 'Аватар',
         src: './images/profile_blob.png',
-        link: '#popup-update-avatar',
-        linkText: 'Поменять аватар',
+        link: '#',
+        linkText: '',
     },
-    inputs: [
-        {
-            name: 'Почта',
-            id: 'email',
-            type: 'email',
-            value: 'pochta@yandex.ru'
-        },
-        {
-            name: 'Логин',
-            id: 'login',
-            value: 'Ivan'
-        },
-        {
-            name: 'Имя',
-            id: 'first_name',
-            value: 'Иван'
-        },
-        {
-            name: 'Фамилия',
-            id: 'second_name',
-            value: 'Иванов'
-        },
-        {
-            name: 'Имя в чате',
-            id: 'display_name',
-            value: 'Ivan'
-        },
-        {
-            name: 'Телефон',
-            id: 'phone',
-            type: 'tel',
-            value: '+7(999)999-99-99'
-        },
-    ],
+    form: {
+        className: 'js-form',
+        method: 'post'
+    },
+    inputs: concatInputs(inputs),
+    button: new Button({
+        text: 'Сохранить',
+        className: 'button edit-profile__button',
+        type: 'submit'
+    }).element.innerHTML,
     back: {
         link: 'profile.html',
         text: 'Назад',
         src: './images/Back.png'
-    }
-};
-export const buttonProps = {
-    text: 'Сохранить',
-    className: 'button edit-profile__button'
+    },
+    eventListeners: [
+        {
+            event: 'event-listener:validate-form',
+            callback: () => {
+                const $form = document.querySelector('.js-form');
+                const fields = ['email', 'login', 'first_name', 'second_name', 'phone', 'display_name'];
+                const validator = new FormValidator($form, fields);
+                validator.initialize();
+            }
+        },
+        {
+            event: 'event-listener:collect-form-data',
+            callback: () => {
+                collectFormData();
+            }
+        },
+    ]
 };
 //# sourceMappingURL=mock.js.map

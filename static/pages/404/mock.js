@@ -4,7 +4,7 @@ const props = {
     back: {
         link: 'chat.html',
         text: 'Назад к чатам'
-    },
+    }
 };
 export default props;
 //# sourceMappingURL=mock.js.map

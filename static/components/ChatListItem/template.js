@@ -7,11 +7,11 @@ export const template = `
 			</span>
 			<span class="item__message">
 				<span class="item__message--from-you {{from.className}}">{{from.text}}</span>
-					{{message.preview}}				
+					{{preview}}				
 				</span>
 		</div>
 		<time class="item__time" datetime="{{time.full}}">{{time.less}}</time>
-		<span class="item__message-counter {{message.className}}">{{message.counter}}</span>
+		<span class="item__message-counter {{counter.className}}">{{counter.value}}</span>
 	</li>
 `;
 //# sourceMappingURL=template.js.map
