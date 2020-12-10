@@ -1,5 +1,4 @@
 import Block from '../../core/Block/index.js';
-
 import { globalEventBus } from '../../core/GlobalEventBus/index.js';
 import { template } from './template.js';
 import compile from '../../utils/compile.js';
@@ -31,7 +30,7 @@ export type InputProps = {
 	isReadOnly?: boolean
 	isHidden?: boolean
 	errorProfile?: string
-	errorEnter?: string
+	errorEntry?: string
 }
 
 export default class Input extends Block {
@@ -47,7 +46,7 @@ export default class Input extends Block {
 			placeholder = '',
 			isReadOnly = false,
 			isHidden = false,
-			errorEnter = '',
+			errorEntry = '',
 			errorProfile = '',
 			file = {
 				className: ''
@@ -72,7 +71,7 @@ export default class Input extends Block {
 			placeholder,
 			isReadOnly,
 			isHidden,
-			errorEnter,
+			errorEntry,
 			errorProfile,
 			file,
 			floatedLabel,

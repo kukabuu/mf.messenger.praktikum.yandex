@@ -12,7 +12,7 @@ export const template = `
 						 {{#if isReadOnly}}readonly{{/if}}
 						 {{#if isHidden}}hidden{{/if}}>
 			<span class="form__label--floated {{floatedLabel.className}}">{{floatedLabel.text}}</span>
-			{{{errorEnter}}}
+			{{{errorEntry}}}
 		</div>
 		{{{errorProfile}}}
 	</div>

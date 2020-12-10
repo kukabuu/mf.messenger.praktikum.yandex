@@ -3,7 +3,7 @@ import { globalEventBus } from '../../core/GlobalEventBus/index.js';
 import { template } from './template.js';
 import compile from '../../utils/compile.js';
 export default class Input extends Block {
-    constructor({ id, label, value, className = '', type = 'text', handleClick = {}, name = id, placeholder = '', isReadOnly = false, isHidden = false, errorEnter = '', errorProfile = '', file = {
+    constructor({ id, label, value, className = '', type = 'text', handleClick = {}, name = id, placeholder = '', isReadOnly = false, isHidden = false, errorEntry = '', errorProfile = '', file = {
         className: ''
     }, floatedLabel = {
         className: '',
@@ -22,7 +22,7 @@ export default class Input extends Block {
             placeholder,
             isReadOnly,
             isHidden,
-            errorEnter,
+            errorEntry,
             errorProfile,
             file,
             floatedLabel,

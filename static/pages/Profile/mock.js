@@ -3,7 +3,7 @@ import Error from '../../components/Error/index.js';
 import Input from '../../components/Input/index.js';
 import Popup from '../../components/Popup/index.js';
 import concatInputs from '../../components/Input/concatInputs.js';
-import { FormValidator } from '../../utils/validation.js';
+import { FormValidator } from '../../utils/validate.js';
 import { collectFormData } from '../../utils/collectFormData.js';
 import { displayFileName } from '../../utils/displayFileName.js';
 const inputs = [
@@ -144,7 +144,7 @@ const popupInputProps = {
     file: {
         className: 'js-file-name'
     },
-    errorEnter: new Error({
+    errorEntry: new Error({
         className: 'popup--error'
     }).element.innerHTML,
     floatedLabel: {
@@ -195,15 +195,15 @@ export const profileProps = {
     footerLinks: [
         {
             name: 'Изменить данные',
-            href: 'edit-profile.html'
+            href: 'profile-edit.html'
         },
         {
             name: 'Изменить пароль',
-            href: 'change-password.html'
+            href: 'password-change.html'
         },
         {
             name: 'Выйти',
-            href: 'login.html',
+            href: 'authorization.html',
             className: 'link--exit'
         }
     ],

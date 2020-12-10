@@ -9,7 +9,7 @@ type props = {
 	[key: string]: string | Function
 };
 
-class Index {
+export default class Index {
 	static EVENTS = {
 		INIT: 'init',
 		FLOW_CWM: 'flow:component-will-mount',
@@ -143,5 +143,3 @@ class Index {
 		this._element.classList.add('i-display-none');
 	}
 }
-
-export default Index;

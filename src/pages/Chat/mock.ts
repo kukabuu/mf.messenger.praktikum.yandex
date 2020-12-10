@@ -7,7 +7,7 @@ import { ListItemProps } from '../../components/ChatListItem/index.js';
 import concatItems from '../../components/ChatListItem/concatItems.js';
 
 import { collectFormData } from '../../utils/collectFormData.js';
-import { FormValidator } from '../../utils/validation.js';
+import { FormValidator } from '../../utils/validate.js';
 import { displayFileName } from '../../utils/displayFileName.js';
 import concatMessage from '../../components/DialogMessage/concatMessage.js';
 
@@ -218,7 +218,7 @@ const inputFileProps: InputProps = {
 	file: {
 		className: 'js-file-name'
 	},
-	errorEnter: new Error({
+	errorEntry: new Error({
 		className: 'popup--error'
 	}).element.innerHTML,
 	floatedLabel: {
@@ -236,7 +236,7 @@ const inputAddUserProps: InputProps = {
 	floatedLabel: {
 		text: 'Логин'
 	},
-	errorEnter: new Error({}).element.innerHTML
+	errorEntry: new Error({}).element.innerHTML
 };
 
 const inputRemoveUserProps: InputProps = {
@@ -249,7 +249,7 @@ const inputRemoveUserProps: InputProps = {
 	floatedLabel: {
 		text: 'Логин'
 	},
-	errorEnter: new Error({}).element.innerHTML
+	errorEntry: new Error({}).element.innerHTML
 };
 
 const inputDeleteChatProps: InputProps = {

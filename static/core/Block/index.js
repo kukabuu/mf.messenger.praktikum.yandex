@@ -1,5 +1,5 @@
 import EventBus from '../EventBus/index.js';
-class Index {
+export default class Index {
     constructor(props = {}, tagName = 'div') {
         this.setProps = (nextProps) => {
             if (!nextProps) {
@@ -109,5 +109,4 @@ Index.EVENTS = {
     FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render'
 };
-export default Index;
 //# sourceMappingURL=index.js.map

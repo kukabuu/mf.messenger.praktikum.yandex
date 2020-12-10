@@ -2,7 +2,7 @@ import Block from '../../core/Block/index.js';
 import { template } from './template.js';
 import compile from '../../utils/compile.js';
 import { globalEventBus } from '../../core/GlobalEventBus/index.js';
-class Profile extends Block {
+export default class Profile extends Block {
     constructor({ eventListeners = [], footerLinks = [{
             name: '',
             href: '#',
@@ -28,5 +28,4 @@ class Profile extends Block {
         return compile(template, this.props);
     }
 }
-export default Profile;
 //# sourceMappingURL=index.js.map

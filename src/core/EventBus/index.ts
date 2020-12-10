@@ -10,7 +10,7 @@ type props = {
 	[key: string]: string | number | boolean | Function
 };
 
-class Index {
+export default class Index {
 	listeners: ListenersType;
 	constructor() {
 		this.listeners = {};
@@ -45,5 +45,3 @@ class Index {
 		});
 	}
 }
-
-export default Index;

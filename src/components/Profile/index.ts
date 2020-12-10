@@ -15,7 +15,10 @@ export type ProfileProps = {
 	popup?: string
 	button?: string
 	avatar: {
-		[key: string] : string
+		src : string
+		name: string
+		link: string
+		linkText: string
 	}
 	form?: {
 		className?: string
@@ -27,12 +30,14 @@ export type ProfileProps = {
 		className?: string
 	}[]
 	back: {
-		[key: string] : string
+		link : string
+		src: string
+		text: string
 	}
 	eventListeners?: EventListener[]
 };
 
-class Profile extends Block {
+export default class Profile extends Block {
 	constructor({
 		eventListeners = [],
 		footerLinks = [{
@@ -68,5 +73,3 @@ class Profile extends Block {
 		return compile(template, this.props);
 	}
 }
-
-export default Profile;

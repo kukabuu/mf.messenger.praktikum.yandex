@@ -1,8 +1,7 @@
 import Block from '../../core/Block/index.js';
 import { template } from './template.js';
-
-import compile from '../../utils/compile.js';
 import { globalEventBus } from '../../core/GlobalEventBus/index.js';
+import compile from '../../utils/compile.js';
 
 type EventListener = {
 	event: string,
@@ -23,7 +22,6 @@ type ChatProps = {
 		person: {
 			src: string
 			name: string
-
 		}
 		tooltip: {
 			options: {
@@ -43,7 +41,7 @@ type ChatProps = {
 				href: string
 				text: string
 			}[]
-		},
+		}
 		sendMessage: {
 			name: string
 			placeholder: string

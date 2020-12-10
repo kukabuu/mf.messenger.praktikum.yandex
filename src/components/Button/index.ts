@@ -1,16 +1,15 @@
 import Block from '../../core/Block/index.js';
-
-import { globalEventBus } from '../../core/GlobalEventBus/index.js';
 import { template } from './template.js';
+import { globalEventBus } from '../../core/GlobalEventBus/index.js';
 import compile from '../../utils/compile.js';
 
 type ButtonProps = {
 	handleClick?: {
 		[key: string]: (...event: MouseEvent[]) => void
 	}
-	className?: string;
-	type?: 'button' | 'submit' | 'reset';
-	text: string;
+	className?: string
+	type?: 'button' | 'submit' | 'reset'
+	text: string
 }
 
 export default class Button extends Block {
@@ -21,7 +20,12 @@ export default class Button extends Block {
 			handleClick = {},
 			text
 		}: ButtonProps) {
-		super({className, type, handleClick, text});
+		super({
+			className,
+			type,
+			handleClick,
+			text
+		});
 
 		Object.entries(handleClick).forEach(([event, callback]) =>{
 			globalEventBus.on(event, callback)

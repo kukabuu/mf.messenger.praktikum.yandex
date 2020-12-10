@@ -1,4 +1,4 @@
-import { isValidForm} from './validation.js';
+import { isValidForm} from './validate.js';
 
 type formFields = {
   [key: string]: any

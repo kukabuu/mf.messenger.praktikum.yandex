@@ -1,5 +1,4 @@
 import Block from '../../core/Block/index.js';
-
 import { template } from './template.js';
 import compile from '../../utils/compile.js';
 

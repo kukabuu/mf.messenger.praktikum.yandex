@@ -1,4 +1,4 @@
-class Index {
+export default class Index {
     constructor() {
         this.listeners = {};
     }
@@ -23,5 +23,4 @@ class Index {
         });
     }
 }
-export default Index;
 //# sourceMappingURL=index.js.map

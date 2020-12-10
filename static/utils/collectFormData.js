@@ -1,4 +1,4 @@
-import { isValidForm } from './validation.js';
+import { isValidForm } from './validate.js';
 export function collectFormData() {
     const $forms = document.querySelectorAll('.js-form');
     if ($forms) {

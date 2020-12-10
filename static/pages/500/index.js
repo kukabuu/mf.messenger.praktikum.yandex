@@ -1,6 +1,6 @@
 import ServerError from '../../core/ServerError/index.js';
 import { render } from '../../utils/render.js';
 import props from './mock.js';
-const notFound = new ServerError(props);
-render('.app', notFound);
+const InternalServerError = new ServerError(props);
+render('.app', InternalServerError);
 //# sourceMappingURL=index.js.map

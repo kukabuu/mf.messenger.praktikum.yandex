@@ -1,5 +1,4 @@
 import Chat from '../../components/Chat/index.js';
-
 import { render } from '../../utils/render.js';
 import * as props from './mock.js';
 import { globalEventBus } from '../../core/GlobalEventBus/index.js';
