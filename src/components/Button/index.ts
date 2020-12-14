@@ -9,7 +9,8 @@ type ButtonProps = {
 	}
 	className?: string
 	type?: 'button' | 'submit' | 'reset'
-	text: string
+	text?: string,
+	content?: string
 }
 
 export default class Button extends Block<ButtonProps> {
@@ -17,12 +18,14 @@ export default class Button extends Block<ButtonProps> {
 		{
 			className = 'button',
 			type = 'button',
+			content = '',
 			handleClick = {},
-			text
+			text = ''
 		}: ButtonProps) {
 		super({
 			className,
 			type,
+			content,
 			handleClick,
 			text
 		});

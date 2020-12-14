@@ -3,10 +3,11 @@ import { template } from './template.js';
 import { globalEventBus } from '../../core/GlobalEventBus/index.js';
 import compile from '../../utils/compile.js';
 export default class Button extends Block {
-    constructor({ className = 'button', type = 'button', handleClick = {}, text }) {
+    constructor({ className = 'button', type = 'button', content = '', handleClick = {}, text = '' }) {
         super({
             className,
             type,
+            content,
             handleClick,
             text
         });

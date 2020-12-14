@@ -41,9 +41,7 @@ export const template = `
     {{#with footer}}
     <footer class="dialog__footer">
     	{{#with attachments}}
-				<button class="dialog__button dialog__attachments">
-					<img src="{{src}}" alt="{{name}}" width="32" height="32">
-				</button>
+				{{{buttonAddAttachments}}}
 				<div class="dialog__tooltip tooltip--attachments">
 					<ul class="dialog__options">
 						{{#each options}}
@@ -61,9 +59,7 @@ export const template = `
 								 name="{{name}}"
 								 placeholder="{{placeholder}}"
 								 {{#if isRequired}}required{{/if}}>
-					<button class="dialog__button" type="submit">
-						<img class="button--send" src="{{button.src}}" alt="{{button.name}}" width="28" height="28">
-					</button>
+					{{{buttonSendMessage}}}
 				</form>
       {{/with}}
     </footer>

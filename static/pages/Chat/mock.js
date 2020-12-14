@@ -2,6 +2,7 @@ import Error from '../../components/Error/index.js';
 import Input from '../../components/Input/index.js';
 import Button from '../../components/Button/index.js';
 import Popup from '../../components/Popup/index.js';
+import Image from '../../components/Image/index.js';
 import concatItems from '../../components/ChatListItem/concatItems.js';
 import { collectFormData } from '../../utils/collectFormData.js';
 import { FormValidator } from '../../utils/validate.js';
@@ -375,8 +376,14 @@ export const chatProps = {
     },
     footer: {
         attachments: {
-            name: 'Добавить',
-            src: './images/attach.png',
+            buttonAddAttachments: new Button({
+                className: 'dialog__button dialog__attachments',
+                content: new Image({
+                    name: 'Добавить',
+                    src: './images/attach.png',
+                    size: 32
+                }).getContent().innerHTML
+            }).getContent().innerHTML,
             options: [
                 {
                     text: 'Фото или Видео',
@@ -394,10 +401,16 @@ export const chatProps = {
             name: 'message',
             placeholder: 'Сообщение',
             isRequired: true,
-            button: {
-                name: 'Отправить',
-                src: './images/back.png'
-            }
+            buttonSendMessage: new Button({
+                className: 'dialog__button',
+                type: 'submit',
+                content: new Image({
+                    name: 'Отправить',
+                    src: './images/back.png',
+                    className: 'button--send',
+                    size: 28
+                }).getContent().innerHTML
+            }).getContent().innerHTML
         }
     },
     chatListItems: concatItems(chatListProps),

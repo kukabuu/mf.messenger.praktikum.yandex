@@ -34,8 +34,7 @@ type ChatProps = {
 	dialog?: string
 	footer: {
 		attachments: {
-			name: string
-			src: string
+			buttonAddAttachments: string,
 			options: {
 				className: string
 				href: string
@@ -46,10 +45,7 @@ type ChatProps = {
 			name: string
 			placeholder: string
 			isRequired: boolean
-			button: {
-				src: string
-				name: string
-			}
+			buttonSendMessage: string
 		}
 	}
 	popupRemoveUser?: string
