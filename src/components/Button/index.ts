@@ -12,7 +12,7 @@ type ButtonProps = {
 	text: string
 }
 
-export default class Button extends Block {
+export default class Button extends Block<ButtonProps> {
 	constructor(
 		{
 			className = 'button',

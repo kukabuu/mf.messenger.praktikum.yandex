@@ -20,7 +20,7 @@ type EntryProps = {
 	eventListeners?: EventListener[]
 };
 
-export default class Entry extends Block {
+export default class Entry extends Block<EntryProps> {
 	constructor({ eventListeners = [], ...props }: EntryProps) {
 		super({eventListeners, ...props});
 

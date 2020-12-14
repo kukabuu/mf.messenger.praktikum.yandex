@@ -1,13 +1,13 @@
 import EventBus from '../EventBus/index.js';
-export default class Index {
-    constructor(props = {}, tagName = 'div') {
+export default class Block {
+    constructor(props, tagName = 'div') {
         this.setProps = (nextProps) => {
             if (!nextProps) {
                 return;
             }
             try {
                 Object.assign(this.props, nextProps);
-                this.eventBus().emit(Index.EVENTS.FLOW_CDU, this.props, nextProps);
+                this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps);
             }
             catch (e) {
                 throw new Error(e);
@@ -21,14 +21,14 @@ export default class Index {
         this.props = this._makePropsProxy(props);
         this.eventBus = () => eventBus;
         this._registerEvents(eventBus);
-        eventBus.emit(Index.EVENTS.INIT);
+        eventBus.emit(Block.EVENTS.INIT);
     }
     _registerEvents(eventBus) {
-        eventBus.on(Index.EVENTS.INIT, this.init.bind(this));
-        eventBus.on(Index.EVENTS.FLOW_CWM, this._componentWillMount.bind(this));
-        eventBus.on(Index.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-        eventBus.on(Index.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-        eventBus.on(Index.EVENTS.FLOW_RENDER, this._render.bind(this));
+        eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
+        eventBus.on(Block.EVENTS.FLOW_CWM, this._componentWillMount.bind(this));
+        eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+        eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+        eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     }
     _createResources() {
         const { tagName } = this._meta;
@@ -36,11 +36,11 @@ export default class Index {
     }
     init() {
         this._createResources();
-        this.eventBus().emit(Index.EVENTS.FLOW_CWM);
+        this.eventBus().emit(Block.EVENTS.FLOW_CWM);
     }
     _componentWillMount() {
         this.componentWillMount();
-        this.eventBus().emit(Index.EVENTS.FLOW_RENDER);
+        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
     // Может переопределять пользователь, необязательно трогать
     componentWillMount() { }
@@ -52,7 +52,7 @@ export default class Index {
     _componentDidUpdate(oldProps, newProps) {
         const response = this.componentDidUpdate(oldProps, newProps);
         if (response) {
-            this.eventBus().emit(Index.EVENTS.FLOW_RENDER);
+            this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
         }
     }
     // Может переопределять пользователь, необязательно трогать
@@ -64,17 +64,14 @@ export default class Index {
     }
     _render() {
         this._element.innerHTML = this.render();
-        this.eventBus().emit(Index.EVENTS.FLOW_CDM);
-    }
-    // Может переопределять пользователь, необязательно трогать
-    render() {
-        return '';
+        this.eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
     getContent() {
         return this.element;
     }
     _makePropsProxy(props) {
-        props = new Proxy(props, {
+        const CustomProxy = Proxy;
+        props = new CustomProxy(props, {
             get(target, prop) {
                 const value = target[prop];
                 return (typeof value === 'function') ? value.bind(target) : value;
@@ -102,7 +99,7 @@ export default class Index {
         this._element.classList.add('i-display-none');
     }
 }
-Index.EVENTS = {
+Block.EVENTS = {
     INIT: 'init',
     FLOW_CWM: 'flow:component-will-mount',
     FLOW_CDM: 'flow:component-did-mount',

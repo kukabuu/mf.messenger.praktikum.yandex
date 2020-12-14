@@ -7,7 +7,7 @@ type ErrorProps = {
 	text?: string;
 }
 
-export default class Error extends Block {
+export default class Error extends Block<ErrorProps> {
 	constructor(
 		{
 			className = '',

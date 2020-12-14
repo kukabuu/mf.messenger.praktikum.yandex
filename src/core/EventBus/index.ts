@@ -1,22 +1,18 @@
-interface Callback {
-	(...args: props[] | [] | MouseEvent[]): void;
+interface Callback<T> {
+	(...args: T[] | [] | MouseEvent[]): void;
 }
 
-type ListenersType = {
-	[key: string]: Callback[];
+type ListenersType<T> = {
+	[key: string]: Callback<T>[];
 };
 
-type props = {
-	[key: string]: string | number | boolean | Function
-};
-
-export default class Index {
-	listeners: ListenersType;
+export default class EventBus<T> {
+	listeners: ListenersType<T>;
 	constructor() {
 		this.listeners = {};
 	}
 
-	on(event: string, callback: (...args: props[] | [] | MouseEvent[]) => void): void {
+	on(event: string, callback: (...args: T[] | [] | MouseEvent[]) => void): void {
 
 		if (!this.listeners[event]) {
 			this.listeners[event] = [];
@@ -25,7 +21,7 @@ export default class Index {
 		this.listeners[event].push(callback);
 	}
 
-	off(event: string, callback: Callback): void {
+	off(event: string, callback: Callback<T>): void {
 		if (!this.listeners[event]) {
 			throw new Error(`Нет события: ${event}`);
 		}
@@ -35,12 +31,12 @@ export default class Index {
 		);
 	}
 
-	emit(event: string, ...args: props[]): void {
+	emit(event: string, ...args: T[]): void {
 		if (!this.listeners[event]) {
 			throw new Error(`Нет события: ${event}`);
 		}
 
-		this.listeners[event].forEach(function(listener: Callback) {
+		this.listeners[event].forEach(function(listener: Callback<T>) {
 			listener(...args);
 		});
 	}

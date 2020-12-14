@@ -12,7 +12,7 @@ type ServerErrorProps = {
 	}
 };
 
-export default class ServerError extends Block {
+export default class ServerError extends Block<ServerErrorProps> {
 	constructor(props: ServerErrorProps) {
 		super(props);
 	}

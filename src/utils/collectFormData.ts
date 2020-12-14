@@ -1,7 +1,7 @@
 import { isValidForm} from './validate.js';
 
 type formFields = {
-  [key: string]: any
+  [key: string]: string | File
 }
 
 export function collectFormData() {
@@ -16,7 +16,7 @@ export function collectFormData() {
       if (!isValidForm()) {
         return;
       }
-      const formFields:formFields = {};
+      const formFields: formFields = {};
       const formData = new FormData($form);
       for (const pair of formData.entries()) {
         formFields[pair[0]] = pair[1];

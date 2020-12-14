@@ -33,7 +33,7 @@ export type InputProps = {
 	errorEntry?: string
 }
 
-export default class Input extends Block {
+export default class Input extends Block<InputProps> {
 	constructor(
 		{
 			id,

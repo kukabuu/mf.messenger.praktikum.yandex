@@ -59,7 +59,7 @@ type ChatProps = {
 	eventListeners?: EventListener[]
 };
 
-export default class Chat extends Block {
+export default class Chat extends Block<ChatProps> {
 	constructor({
 		popupRemoveUser = '',
 		popupAddUser = '',

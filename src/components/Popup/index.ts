@@ -17,7 +17,7 @@ type PopupProps = {
 	eventListeners?: EventListener[]
 };
 
-export default class Popup extends Block {
+export default class Popup extends Block<PopupProps> {
 	constructor(
 		{
 			eventListeners = [],

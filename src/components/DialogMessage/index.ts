@@ -35,7 +35,7 @@ export type MessageProps = {
 	}
 };
 
-export default class DialogMessage extends Block {
+export default class DialogMessage extends Block<MessageProps> {
 	constructor(
 		{
 			isEmpty = false,

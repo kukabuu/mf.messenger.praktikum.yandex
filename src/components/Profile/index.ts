@@ -37,7 +37,7 @@ export type ProfileProps = {
 	eventListeners?: EventListener[]
 };
 
-export default class Profile extends Block {
+export default class Profile extends Block<ProfileProps> {
 	constructor({
 		eventListeners = [],
 		footerLinks = [{

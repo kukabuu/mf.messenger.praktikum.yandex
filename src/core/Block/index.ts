@@ -1,15 +1,20 @@
 import EventBus from '../EventBus/index.js';
 
+interface ProxyConstructor {
+	new <T extends object, H extends Proxy<string, Function>>(target: T, handler: ProxyHandler<H>): T
+}
+
+type Proxy<S, F> = {
+	get(): S | F
+	set(value: S): void
+}
+
 type _meta = {
 	tagName: string,
 	props: unknown | null
 };
 
-type props = {
-	[key: string]: string | Function
-};
-
-export default class Index {
+export default abstract class Block<T extends object> {
 	static EVENTS = {
 		INIT: 'init',
 		FLOW_CWM: 'flow:component-will-mount',
@@ -20,11 +25,11 @@ export default class Index {
 
 	private _element: HTMLElement;
 	readonly _meta: _meta;
-	props: props;
-	eventBus: () => EventBus;
+	props: T;
+	eventBus: () => EventBus<T>;
 
-	constructor(props = {}, tagName: string = 'div') {
-		const eventBus: EventBus = new EventBus();
+	protected constructor(props: T, tagName: string = 'div') {
+		const eventBus: EventBus<T> = new EventBus();
 		this._meta = {
 			tagName,
 			props
@@ -33,15 +38,15 @@ export default class Index {
 		this.props = this._makePropsProxy(props);
 		this.eventBus = () => eventBus;
 		this._registerEvents(eventBus);
-		eventBus.emit(Index.EVENTS.INIT);
+		eventBus.emit(Block.EVENTS.INIT);
 	}
 
-	private _registerEvents(eventBus: EventBus) {
-		eventBus.on(Index.EVENTS.INIT, this.init.bind(this));
-		eventBus.on(Index.EVENTS.FLOW_CWM, this._componentWillMount.bind(this));
-		eventBus.on(Index.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-		eventBus.on(Index.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-		eventBus.on(Index.EVENTS.FLOW_RENDER, this._render.bind(this));
+	private _registerEvents(eventBus: EventBus<T>) {
+		eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
+		eventBus.on(Block.EVENTS.FLOW_CWM, this._componentWillMount.bind(this));
+		eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+		eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+		eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
 
 	private _createResources() {
@@ -51,12 +56,12 @@ export default class Index {
 
 	init() {
 		this._createResources();
-		this.eventBus().emit(Index.EVENTS.FLOW_CWM);
+		this.eventBus().emit(Block.EVENTS.FLOW_CWM);
 	}
 
 	private _componentWillMount() {
 		this.componentWillMount();
-		this.eventBus().emit(Index.EVENTS.FLOW_RENDER);
+		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
 	// Может переопределять пользователь, необязательно трогать
@@ -69,25 +74,25 @@ export default class Index {
 	// Может переопределять пользователь, необязательно трогать
 	componentDidMount() {}
 
-	private _componentDidUpdate(oldProps: props, newProps: props) {
+	private _componentDidUpdate(oldProps: T, newProps: T) {
 		const response = this.componentDidUpdate(oldProps, newProps);
 		if (response) {
-			this.eventBus().emit(Index.EVENTS.FLOW_RENDER);
+			this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 		}
 	}
 
 	// Может переопределять пользователь, необязательно трогать
-	componentDidUpdate(oldProps: props, newProps: props) {
+	componentDidUpdate(oldProps: T, newProps: T) {
 		return {oldProps, newProps};
 	}
 
-	setProps = (nextProps: props) => {
+	setProps = (nextProps: T) => {
 		if (!nextProps) {
 			return;
 		}
 		try {
 			Object.assign(this.props, nextProps);
-			this.eventBus().emit(Index.EVENTS.FLOW_CDU, this.props, nextProps)
+			this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps)
 		} catch (e) {
 			throw new Error(e);
 		}
@@ -99,25 +104,24 @@ export default class Index {
 
 	private _render() {
 		this._element.innerHTML = this.render();
-		this.eventBus().emit(Index.EVENTS.FLOW_CDM);
+		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
 
-	// Может переопределять пользователь, необязательно трогать
-	render(): string {
-		return '';
-	}
+	abstract render(): string;
 
 	getContent() {
 		return this.element;
 	}
 
-	private _makePropsProxy(props: props) {
-		props = new Proxy (props, {
-			get(target: props, prop: string) {
+	private _makePropsProxy<T extends object, P extends keyof S, S extends Proxy<string, Function>>(props: T): T {
+		const CustomProxy = Proxy as ProxyConstructor;
+
+		props = new CustomProxy (props, {
+			get(target: S, prop: P) {
 				const value = target[prop];
 				return (typeof value === 'function') ? value.bind(target) : value;
 			},
-			set(target: props, prop: string, value): boolean {
+			set(target: S, prop: P, value): boolean {
 				if (target[prop] !== value) {
 					target[prop] = value;
 					return true;

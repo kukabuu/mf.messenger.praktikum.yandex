@@ -1,4 +1,4 @@
-export default class Index {
+export default class EventBus {
     constructor() {
         this.listeners = {};
     }

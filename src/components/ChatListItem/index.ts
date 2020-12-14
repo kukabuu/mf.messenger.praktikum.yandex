@@ -24,7 +24,7 @@ export type ListItemProps = {
 	}
 };
 
-export default class ChatListItem extends Block {
+export default class ChatListItem extends Block<ListItemProps> {
 	constructor({
 		from = {
 			text: 'Вы:',
