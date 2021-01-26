@@ -1,0 +1,1 @@
+{"version":3,"file":"props.js","sourceRoot":"","sources":["../../../src/controllers/ServerErrorController/props.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,KAAK,GAAG;IACpB,KAAK,EAAE,KAAK;IACZ,SAAS,EAAE,eAAe;IAC1B,IAAI,EAAE;QACL,IAAI,EAAE,OAAO;QACb,IAAI,EAAE,eAAe;KACrB;CACD,CAAA"}

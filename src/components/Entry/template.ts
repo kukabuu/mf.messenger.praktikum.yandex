@@ -8,4 +8,5 @@ export const template = `
 			{{{button}}}
 		</form>
 		<a class="link" href="{{back.link}}">{{back.text}}</a>
-	</main>`;
+	</main>
+	{{{ notification }}}`;

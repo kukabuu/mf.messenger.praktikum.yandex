@@ -4,6 +4,7 @@ import { template } from './template.js';
 import compile from '../../utils/compile.js';
 
 export type ListItemProps = {
+	id: number
 	avatar: {
 		src: string
 		name: string

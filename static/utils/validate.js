@@ -1,3 +1,4 @@
+import { addEventForChild } from './addEvent.js';
 const patterns = {
     email: /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
     phone: /^\+7\(9[0-9]{2}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/
@@ -15,12 +16,13 @@ export function isValidForm() {
     return !visibleErrors.length;
 }
 export class FormValidator {
-    constructor($form, fields) {
-        this.$form = $form;
+    constructor(formSelector, fields) {
+        this.formSelector = formSelector;
         this.fields = fields;
+        this.$form = document.querySelector(formSelector);
     }
     initialize() {
-        this.validateOnFocus();
+        this.validateOnInput();
         this.validateOnBlur();
         this.validateOnSubmit();
     }
@@ -28,11 +30,12 @@ export class FormValidator {
         if (this.$form === null) {
             return;
         }
-        this.$form.addEventListener('submit', (event) => {
+        addEventForChild(document.body, 'submit', this.formSelector, submitHandle.bind(this));
+        function submitHandle(_$form, event) {
             if (!this.checkFormValidity()) {
                 event.preventDefault();
             }
-        });
+        }
     }
     checkFormValidity() {
         this.fields.forEach((field) => {
@@ -45,18 +48,18 @@ export class FormValidator {
         if (this.$form === null) {
             return;
         }
-        this.$form.addEventListener('blur', this.callback(), true);
+        addEventForChild(document.body, 'blur', this.formSelector, this.callback(), true);
     }
-    validateOnFocus() {
+    validateOnInput() {
         if (this.$form === null) {
             return;
         }
-        this.$form.addEventListener('focus', this.callback(), true);
+        addEventForChild(document.body, 'input', this.formSelector, this.callback(), true);
     }
     callback() {
         const checkValidity = this.checkValidity.bind(this);
         const fields = this.fields;
-        return (event) => {
+        return (_element, event) => {
             const target = event.target;
             const $input = fields.includes(target.id) ? target : null;
             if ($input === null) {
@@ -69,14 +72,12 @@ export class FormValidator {
         if ($input === null) {
             return;
         }
-        // проверить на пустоту
         if ($input.value.trim().length === 0) {
             this.setStatus($input, errorMessages.emptyField, 'error');
         }
         else {
             this.setStatus($input, null, 'success');
         }
-        // проверить на валидность email
         if ($input.type === 'email') {
             if (!patterns.email.test($input.value)) {
                 this.setStatus($input, errorMessages.invalidEmail, 'error');
@@ -85,7 +86,6 @@ export class FormValidator {
                 this.setStatus($input, null, 'success');
             }
         }
-        // проверить на валидность номера телефона
         if ($input.type === 'tel') {
             if (!patterns.phone.test($input.value)) {
                 this.setStatus($input, errorMessages.invalidPhone, 'error');
@@ -94,7 +94,6 @@ export class FormValidator {
                 this.setStatus($input, null, 'success');
             }
         }
-        // проверить на совпадение паролей
         if ($input.id === 'password-repeat') {
             const $passwordInput = this.$form?.querySelector('#password');
             if ($passwordInput === null || typeof $passwordInput === 'undefined') {
@@ -110,7 +109,6 @@ export class FormValidator {
                 this.setStatus($input, null, 'success');
             }
         }
-        // проверить на выбор изображения
         if ($input.type === 'file') {
             if ($input.files?.length === 0) {
                 this.setStatus($input, errorMessages.emptyFile, 'error');

@@ -4,24 +4,17 @@ type formFields = {
   [key: string]: string | File
 }
 
-export function collectFormData() {
-  const $forms: NodeListOf<HTMLFormElement> = document.querySelectorAll('.js-form');
-  if ($forms.length === 0) {
+export function collectFormData($form: HTMLFormElement) {
+  if (!$form || !isValidForm()) {
     return;
   }
 
-  $forms.forEach(($form) => {
-    $form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!isValidForm()) {
-        return;
-      }
-      const formFields: formFields = {};
-      const formData = new FormData($form);
-      for (const pair of formData.entries()) {
-        formFields[pair[0]] = pair[1];
-      }
-      console.log(formFields);
-    });
-  });
+  const formFields: formFields = {};
+  const formData = new FormData($form);
+  console.log(JSON.stringify(Object.fromEntries(formData)));
+  for (const pair of formData.entries()) {
+    formFields[pair[0]] = pair[1];
+  }
+
+  return formFields;
 }

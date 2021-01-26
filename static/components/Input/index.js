@@ -3,18 +3,15 @@ import { globalEventBus } from '../../core/GlobalEventBus/index.js';
 import { template } from './template.js';
 import compile from '../../utils/compile.js';
 export default class Input extends Block {
-    constructor({ id, label, value, className = '', type = 'text', handleClick = {}, name = id, placeholder = '', isReadOnly = false, isHidden = false, errorEntry = '', errorProfile = '', file = {
+    constructor({ className = '', type = 'text', handleClick = {}, name = '', placeholder = '', isReadOnly = false, isHidden = false, errorEntry = '', errorProfile = '', file = {
         className: ''
     }, floatedLabel = {
         className: '',
         text: ''
     }, group = {
         className: ''
-    } }) {
+    }, ...props }) {
         super({
-            id,
-            label,
-            value,
             className,
             type,
             handleClick,
@@ -26,7 +23,8 @@ export default class Input extends Block {
             errorProfile,
             file,
             floatedLabel,
-            group
+            group,
+            ...props
         });
         Object.entries(handleClick).forEach(([event, callback]) => {
             globalEventBus.on(event, callback);

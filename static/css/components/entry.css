@@ -20,9 +20,10 @@
 }
 
 .register {
-  margin: 15% auto;
+  margin: auto;
+  height: fit-content;
 }
 
 .login {
-  margin: 15% auto auto;
+  margin: auto;
 }

@@ -1,4 +1,5 @@
 import EventBus from '../EventBus/index.js';
+import { merge } from '../../utils/merge.js';
 
 interface ProxyConstructor {
 	new <T extends object, H extends Proxy<string, Function>>(target: T, handler: ProxyHandler<H>): T
@@ -9,12 +10,16 @@ type Proxy<S, F> = {
 	set(value: S): void
 }
 
+type Object = {
+	[key: string]: any;
+}
+
 type _meta = {
 	tagName: string,
 	props: unknown | null
 };
 
-export default abstract class Block<T extends object> {
+export default abstract class Block<T extends Object> {
 	static EVENTS = {
 		INIT: 'init',
 		FLOW_CWM: 'flow:component-will-mount',
@@ -90,10 +95,12 @@ export default abstract class Block<T extends object> {
 		if (!nextProps) {
 			return;
 		}
+		console.log('from set props')
 		try {
-			Object.assign(this.props, nextProps);
+			this.props = merge(this.props, nextProps);
 			this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps)
 		} catch (e) {
+			console.log('some error here')
 			throw new Error(e);
 		}
 	};
@@ -126,7 +133,7 @@ export default abstract class Block<T extends object> {
 					target[prop] = value;
 					return true;
 				}
-				return false;
+				return true;
 			},
 			deleteProperty() {
 				throw new Error('Нет прав')
@@ -140,10 +147,10 @@ export default abstract class Block<T extends object> {
 	}
 
 	show() {
-		this._element.classList.remove('i-display-none');
+		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
 	hide() {
-		this._element.classList.add('i-display-none');
+		this._element.remove();
 	}
 }

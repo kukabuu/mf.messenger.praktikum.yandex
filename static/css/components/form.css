@@ -54,4 +54,5 @@
   line-height: 1.2;
   color: var(--color-secondary);
   text-align: center;
+  word-break: break-word;
 }

@@ -9,8 +9,12 @@ type ButtonProps = {
 	}
 	className?: string
 	type?: 'button' | 'submit' | 'reset'
-	text?: string,
+	text?: string
 	content?: string
+	data?: {
+		name?: string
+		value?: string
+	}
 }
 
 export default class Button extends Block<ButtonProps> {
@@ -20,14 +24,19 @@ export default class Button extends Block<ButtonProps> {
 			type = 'button',
 			content = '',
 			handleClick = {},
-			text = ''
+			text = '',
+			data = {
+				name: '',
+				value: ''
+			}
 		}: ButtonProps) {
 		super({
 			className,
 			type,
 			content,
 			handleClick,
-			text
+			text,
+			data
 		});
 
 		Object.entries(handleClick).forEach(([event, callback]) =>{

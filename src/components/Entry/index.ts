@@ -8,11 +8,12 @@ type EventListener = {
 	callback: () => void
 }
 
-type EntryProps = {
+export type EntryProps = {
 	className: string
 	header: string
 	inputs: string
 	button: string
+	notification: string
 	back: {
 		link: string
 		text: string

@@ -1,16 +1,15 @@
 export const template = `
 	<aside class="chat__aside js-aside">
-		{{#with profile}}
-			<a class="chat__link" href="{{link}}">{{name}}</a>
-			<form action="#" class="chat__search search" method="{{method}}">
-				<label class="i-visually-hidden" for="{{search.id}}">{{search.name}}</label>
-				<input class="search__input" id="{{search.id}}" type="text" placeholder="{{search.name}}">
-				<span class="search__icon"></span>
-			</form>
-		{{/with}}
+		<a class="chat__link" href="{{profile.link}}">{{profile.name}}</a>
+		<form action="#" class="chat__search search js-search" method="{{search.method}}">
+			<label class="i-visually-hidden" for="{{search.id}}">{{search.name}}</label>
+			<input class="search__input" name="login" id="{{search.id}}" type="text" placeholder="{{search.name}}">
+			<span class="search__icon"></span>
+		</form>
 		<ul class="list scrollbar js-chat-list">
 			{{{chatListItems}}}
 		</ul>
+		{{{ buttonChatCreate }}}
   </aside>
 	<div class="chat__dialog dialog">
     <header class="dialog__header">
@@ -21,14 +20,14 @@ export const template = `
 						{{person.name}}
 					</span>
 				</div>
-				<div class="dialog__settings">
+				<div class="dialog__settings js-tooltip__button">
 					<span class="burger"></span>
 				</div>
-				<div class="dialog__tooltip tooltip--settings">
+				<div class="dialog__tooltip tooltip--settings js-tooltip i-display-none">
 					<ul class="dialog__options">
 						{{#each tooltip.options}}
 							<li class="dialog__option">
-								<a class="option__link {{className}}" href="{{href}}">{{text}}</a>
+								<span class="option__link {{className}}" data-popup="{{href}}">{{text}}</span>
 							</li>
 						{{/each}}
 					</ul>
@@ -42,11 +41,11 @@ export const template = `
     <footer class="dialog__footer">
     	{{#with attachments}}
 				{{{buttonAddAttachments}}}
-				<div class="dialog__tooltip tooltip--attachments">
+				<div class="dialog__tooltip tooltip--attachments js-tooltip i-display-none">
 					<ul class="dialog__options">
 						{{#each options}}
 							<li class="dialog__option">
-								<a class="option__link {{className}}" href="{{href}}">{{text}}</a>
+								<span class="option__link {{className}}" data-popup="{{href}}">{{text}}</span>
 							</li>
 						{{/each}}
 					</ul>
@@ -65,16 +64,20 @@ export const template = `
     </footer>
     {{/with}}
   </div>
-  <div class="chat__popup" id="popup-remove-user">
+  <div class="js-popup chat__popup" id="popup-remove-user">
   		{{{popupRemoveUser}}}
 	</div>
-  <div class="chat__popup" id="popup-chat-delete">
+  <div class="js-popup chat__popup" id="popup-chat-delete">
   		{{{popupChatDelete}}}
 	</div>
-  <div class="chat__popup" id="popup-add-user">
+  <div class="js-popup chat__popup" id="popup-add-user">
   		{{{popupAddUser}}}
 	</div>
-  <div class="chat__popup" id="popup-upload-file">
+  <div class="js-popup chat__popup" id="popup-upload-file">
   		{{{popupUploadFile}}}
 	</div>
+	<div class="js-popup chat__popup" id="popup-add-chat">
+  		{{{popupAddChat}}}
+	</div>
+	{{{ notification }}}
 `;

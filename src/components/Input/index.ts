@@ -36,13 +36,10 @@ export type InputProps = {
 export default class Input extends Block<InputProps> {
 	constructor(
 		{
-			id,
-			label,
-			value,
 			className = '',
 			type = 'text',
 			handleClick = {},
-			name = id,
+			name = '',
 			placeholder = '',
 			isReadOnly = false,
 			isHidden = false,
@@ -57,13 +54,11 @@ export default class Input extends Block<InputProps> {
 			},
 			group = {
 				className: ''
-			}
+			},
+			...props
 		}: InputProps
 	) {
 		super({
-			id,
-			label,
-			value,
 			className,
 			type,
 			handleClick,
@@ -75,7 +70,8 @@ export default class Input extends Block<InputProps> {
 			errorProfile,
 			file,
 			floatedLabel,
-			group
+			group,
+			...props
 		});
 
 		Object.entries(handleClick).forEach(([event, callback]) =>{

@@ -10,7 +10,7 @@ export default class Profile extends Block {
         }], form = {
         className: '',
         method: 'get'
-    }, popup = '', header = '', button = '', ...props }) {
+    }, popup = '', header = '', button = '', avatar = './images/profile_blob.png', ...props }) {
         super({
             eventListeners,
             footerLinks,
@@ -18,6 +18,7 @@ export default class Profile extends Block {
             popup,
             header,
             button,
+            avatar,
             ...props
         });
         eventListeners.forEach((listener) => {

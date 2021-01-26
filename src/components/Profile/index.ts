@@ -14,11 +14,12 @@ export type ProfileProps = {
 	inputs: string
 	popup?: string
 	button?: string
-	avatar: {
-		src : string
+	avatar: string
+	avatarInfo: {
 		name: string
-		link: string
-		linkText: string
+		link?: string
+		linkText?: string
+		classToChange?: string
 	}
 	form?: {
 		className?: string
@@ -52,6 +53,7 @@ export default class Profile extends Block<ProfileProps> {
 		popup = '',
 		header = '',
 		button = '',
+		avatar = './images/profile_blob.png',
 		...props
 	}: ProfileProps) {
 		super({
@@ -61,6 +63,7 @@ export default class Profile extends Block<ProfileProps> {
 			popup,
 			header,
 			button,
+			avatar,
 			...props
 		});
 

@@ -17,6 +17,7 @@
   height: 100vh;
   background-color: var(--color-tertiary);
   padding: 1rem 0;
+  position: relative;
 }
 
 .chat__link {
@@ -39,6 +40,20 @@
   margin: 1.5rem 1rem;
 }
 
+.chat__create {
+  position: absolute;
+  display: block;
+  background:
+          linear-gradient(#fff,#fff),
+          linear-gradient(#fff,#fff),
+          var(--color-primary);
+  background-position: center;
+  background-size: 50% 2px,2px 50%; /*thickness = 2px, length = 50% (25px)*/
+  background-repeat: no-repeat;
+  bottom: 3rem;
+  right: 3rem;
+}
+
 .chat__dialog {
   width: calc(100% - 31rem);
   height: 100vh;
@@ -55,12 +70,6 @@
   transition: opacity 1s;
   visibility: hidden;
   opacity: 0;
-}
-
-.chat__popup:target {
-  visibility: visible;
-  opacity: 1;
-  z-index: 1000;
 }
 
 .chat__button--cancel {

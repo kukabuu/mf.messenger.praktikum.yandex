@@ -1,4 +1,9 @@
 .server-error {
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.server-error__title {
   margin-top: 40vh;
   text-align: center;
 }

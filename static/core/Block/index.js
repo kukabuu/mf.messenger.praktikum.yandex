@@ -1,15 +1,18 @@
 import EventBus from '../EventBus/index.js';
+import { merge } from '../../utils/merge.js';
 export default class Block {
     constructor(props, tagName = 'div') {
         this.setProps = (nextProps) => {
             if (!nextProps) {
                 return;
             }
+            console.log('from set props');
             try {
-                Object.assign(this.props, nextProps);
+                this.props = merge(this.props, nextProps);
                 this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps);
             }
             catch (e) {
+                console.log('some error here');
                 throw new Error(e);
             }
         };
@@ -81,7 +84,7 @@ export default class Block {
                     target[prop] = value;
                     return true;
                 }
-                return false;
+                return true;
             },
             deleteProperty() {
                 throw new Error('Нет прав');
@@ -93,10 +96,10 @@ export default class Block {
         return document.createElement(tagName);
     }
     show() {
-        this._element.classList.remove('i-display-none');
+        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
     hide() {
-        this._element.classList.add('i-display-none');
+        this._element.remove();
     }
 }
 Block.EVENTS = {

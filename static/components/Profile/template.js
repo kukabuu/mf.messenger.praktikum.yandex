@@ -1,14 +1,12 @@
 export const template = `
 	<main class="container container__profile">
-    <div class="profile__avatar">
-    {{#with avatar}}
-      <img class="avatar" src="{{src}}" alt="{{name}}" width="130">
+    <div class="profile__avatar {{avatarInfo.classToChange}}">
+      <img class="avatar" src="{{avatar}}" alt="{{avatarInfo.name}}" width="130">
       <div class="avatar__link">
-        <a class="link link__text" href="{{link}}">
-          {{linkText}}
+        <a class="link link__text js-add-file" data-popup="{{avatarInfo.link}}">
+          {{avatarInfo.linkText}}
         </a>
       </div>
-      {{/with}}
     </div>
     <h2 class="profile__header">
       {{header}}
@@ -26,8 +24,9 @@ export const template = `
       <img src="{{back.src}}" alt="{{back.text}}" width="28">
     </a>
   </main>
-  <div class="profile__popup" id="popup-update-avatar">
+  <div class="js-popup profile__popup" id="popup-update-avatar">
   	{{{popup}}}
 	</div>
+	{{{ notification }}}
 `;
 //# sourceMappingURL=template.js.map

@@ -35,7 +35,7 @@
 }
 
 .dialog__settings {
-  margin: 1.5rem 1rem 0 0;
+  padding: 1.5rem 1rem 0 3rem;
 }
 
 .dialog__main {
@@ -134,6 +134,7 @@
   color: var(--color-black);
   display: inline-block;
   padding-top: .5rem;
+  cursor: pointer;
 }
 
 .option--add-user {

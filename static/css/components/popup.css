@@ -44,7 +44,7 @@
   margin-top: 2rem;
 }
 
-.popup--close {
+.popup__close-button {
   font-size: 2rem;
   color: var(--color-secondary);
   position: absolute;
@@ -52,8 +52,9 @@
   right: 1.5rem;
   transition: hover .1s;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.popup--close:hover {
+.popup__close-button:hover {
   color: var(--color-primary);
 }

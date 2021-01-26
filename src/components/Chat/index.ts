@@ -12,12 +12,14 @@ type ChatProps = {
 	profile: {
 		link: string
 		name: string
-		search: {
-			name: string
-			id: string
-		}
+	}
+	search: {
+		name: string
+		id: string
+		method: string
 	}
 	chatListItems: string
+	buttonChatCreate: string
 	header: {
 		person: {
 			src: string
@@ -52,6 +54,7 @@ type ChatProps = {
 	popupAddUser?: string
 	popupChatDelete?: string
 	popupUploadFile?: string
+	notification: string
 	eventListeners?: EventListener[]
 };
 
