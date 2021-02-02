@@ -1,0 +1,1 @@
+{"version":3,"file":"props.js","sourceRoot":"","sources":["../../../../src/controllers/NotFoundPageController/props.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,KAAK,GAAG;IACnB,KAAK,EAAE,KAAK;IACZ,SAAS,EAAE,gBAAgB;IAC3B,IAAI,EAAE;QACJ,IAAI,EAAE,OAAO;QACb,IAAI,EAAE,eAAe;KACtB;CACF,CAAA"}
