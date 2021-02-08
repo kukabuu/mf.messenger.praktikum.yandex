@@ -1,16 +1,9 @@
-import HTTP from '../core/HTTP/index.js';
-import BaseAPI from '../core/BaseAPI/index.js';
+import HTTP from '../core/HTTP/index';
 
 const profileChangePasswordAPIInstance = new HTTP('/user/password');
 
-export class ProfileChangePasswordAPI extends BaseAPI {
-	update(data: object) {
-		const options = {
-			...data,
-			headers: {
-				'Content-type': 'application/json; charset=utf-8'
-			}
-		}
-		return profileChangePasswordAPIInstance.put('/', options);
-	}
+export class ProfileChangePasswordAPI {
+  update(data: Record<string, unknown>): Promise<XMLHttpRequest> {
+    return profileChangePasswordAPIInstance.put('/', data);
+  }
 }

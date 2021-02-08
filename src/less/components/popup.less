@@ -1,0 +1,62 @@
+.popup {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 34rem;
+	border-radius: 12px;
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+	padding: 3rem;
+	background: @color-white;
+	transition: opacity .5s;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	&__header {
+		margin-top: 1rem;
+
+		&--error {
+			color: @color-error;
+		}
+	}
+
+	&__form-group {
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+		width: 50%;
+		margin: 0 auto;
+	}
+
+	&__label {
+		color: @color-primary;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	&__button {
+		margin-top: 3.5rem;
+	}
+
+	&--error {
+		text-align: center;
+		font-size: 1.1rem;
+		margin-top: 2rem;
+	}
+
+	&__close-button {
+		font-size: 2rem;
+		color: @color-secondary;
+		position: absolute;
+		top: 1rem;
+		right: 1.5rem;
+		transition: hover .1s;
+		text-decoration: none;
+		cursor: pointer;
+
+		&:hover {
+			color: @color-primary;
+		}
+	}
+}

@@ -1,16 +1,9 @@
-import HTTP from '../core/HTTP/index.js';
-import BaseAPI from '../core/BaseAPI/index.js';
+import HTTP from '../core/HTTP/index';
 
 const signUpAPIInstance = new HTTP('/auth/signup');
 
-export class SignUpAPI extends BaseAPI {
-	create(data: object) {
-		const options = {
-			...data,
-			headers: {
-				'Content-type': 'application/json; charset=utf-8'
-			}
-		}
-		return signUpAPIInstance.post('/', options);
-	}
+export class SignUpAPI {
+  create(data: Record<string, unknown>): Promise<XMLHttpRequest> {
+    return signUpAPIInstance.post('/', data);
+  }
 }

@@ -5,4 +5,4 @@ export const props = {
     link: 'chats',
     text: 'Назад к чатам'
   }
-}
+};

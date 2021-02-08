@@ -1,0 +1,77 @@
+.message {
+	padding: 1rem;
+	max-width: 40rem;
+	min-width: 10rem;
+	position: relative;
+
+	&--from {
+		background-color: @color-tertiary;
+		border-radius: 0 12px 12px 12px;
+	}
+
+	&--left .person__image {
+		margin: auto 1.2rem 0 0;
+	}
+
+	&--right {
+		margin-left: auto;
+		flex-wrap: wrap;
+	}
+
+	&--yours {
+		padding: 1rem;
+		background-color: @color-hover;
+		border-radius: 12px 12px 0 12px;
+	}
+
+	&--from.attachment {
+		background-color: transparent;
+		padding-bottom: 0;
+	}
+
+	&__time {
+		display: block;
+		right: .9rem;
+		bottom: 1.2rem;
+		font-size: .9rem;
+		text-align: end;
+		color: @color-secondary;
+	}
+
+	&__time.time--dark {
+		color: @color-white;
+		text-align: center;
+		right: 2rem;
+	}
+
+	&--yours &__time {
+		color: @color-primary;
+		margin: auto 0 0;
+	}
+
+	&__delivery {
+		position: absolute;
+		bottom: .9rem;
+		right: 3.5rem;
+		width: 1rem;
+		height: 1rem;
+		background: url("../../images/sended.png") no-repeat;
+		margin: auto .1rem 0 auto;
+	}
+}
+
+.attachment--image {
+	object-fit: cover;
+	width: 31.5rem;
+	border-radius: 1.2rem;
+	border: 1px solid @color-secondary-light;
+}
+
+.time--dark {
+	position: absolute;
+	display: block;
+	width: 3.7rem;
+	height: 1.3rem;
+	background-color: @color-secondary-dark;
+	border-radius: .6rem;
+}

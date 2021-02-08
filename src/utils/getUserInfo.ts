@@ -1,17 +1,13 @@
-import { ProfileAPI } from '../api/profileAPI.js';
-import { router } from '../core/Main/main.js';
+import { ProfileAPI } from '../api/profileAPI';
+import { router } from '../core/Main/main';
 
-export async function getUserInfo() {
-	return new ProfileAPI()
-		.request()
-		.then((response) => {
-			console.log('FROM REQUEST OPEN')
-
-			console.log(response.responseText, response.status)
-			if (response.status !== 200) {
-				router.go('/notFound');
-				return;
-			}
-			return JSON.parse(response.responseText);
-		})
+export async function getUserInfo(): Promise<Record<string, unknown>> {
+  return new ProfileAPI()
+    .request()
+    .then((response) => {
+      return JSON.parse(response.response);
+    })
+    .catch(() => {
+      router.go('/notFound');
+    });
 }

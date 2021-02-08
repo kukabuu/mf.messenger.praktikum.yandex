@@ -1,77 +1,75 @@
-import Route from '../Route/index.js';
-import ComponentController from '../ComponentController/index.js';
+import Route from '../Route/index';
+import ComponentController from '../ComponentController/index';
 
 type asController<T> = new () => T;
 
 export default class Router {
-	routes: Route[]
-	history: History
-	private static __instance: Router
-	private readonly _rootQuery: string
-	private _currentRoute: Route | null | undefined
+  private static __instance: Router;
+  routes: Route[];
+  history: History;
+  private readonly _rootQuery: string;
+  private _currentRoute: Route | null | undefined;
 
-	constructor(rootQuery: string) {
-		if (Router.__instance) {
-			return Router.__instance;
-		}
+  constructor(rootQuery = 'body') {
+    if (Router.__instance) {
+      return Router.__instance;
+    }
 
-		this.routes = [];
-		this.history = window.history;
-		this._currentRoute = null;
-		this._rootQuery = rootQuery;
+    this.routes = [];
+    this.history = window.history;
+    this._currentRoute = null;
+    this._rootQuery = rootQuery;
 
-		Router.__instance = this;
-	}
+    Router.__instance = this;
+  }
 
-	use(pathname: string, block: asController<ComponentController>) {
-		const route = new Route(pathname, block, this._rootQuery);
-		this.routes.push(route);
-		return this;
-	}
+  use(pathname: string, block: asController<ComponentController>): Router {
+    const route = new Route(pathname, block, this._rootQuery);
+    this.routes.push(route);
+    return this;
+  }
 
-	start() {
-		// Реагируем на изменения в адресной строке и вызываем перерисовку
-		window.onpopstate = (event: Event) => {
-			console.log((event.currentTarget as Document).location.hash)
-			if ((event.currentTarget as Document).location.hash.length) {
-				return;
-			}
-			this._onRoute((event.currentTarget as Document).location.pathname);
-		};
+  start(): void {
+    window.onpopstate = (event: Event) => {
+      if ((event.currentTarget as Document).location.hash.length) {
+        return;
+      }
+      this._onRoute((event.currentTarget as Document).location.pathname);
+    };
 
-		this._onRoute(window.location.pathname);
-	}
+    this._onRoute(window.location.pathname);
+  }
 
-	private _onRoute(pathname: string) {
-		const route = this.getRoute(pathname);
+  go(pathname: string): void {
+    this.history.pushState({}, '', pathname);
+    this._onRoute(pathname);
+  }
 
-		if (!route) {
-			this.go('/notFound');
-			return;
-		}
+  back(): void {
+    this.history.back();
+  }
 
-		if (this._currentRoute) {
-			this._currentRoute.leave();
-		}
+  forward(): void {
+    this.history.forward();
+  }
 
-		this._currentRoute = route;
-		route.render();
-	}
+  getRoute(pathname: string): Route | undefined {
+    return this.routes.find(route => route.match(pathname));
+  }
 
-	go(pathname: string) {
-		this.history.pushState({}, "", pathname);
-		this._onRoute(pathname);
-	}
+  private _onRoute(pathname: string) {
+    const route = this.getRoute(pathname);
 
-	back() {
-		this.history.back();
-	}
+    if (!route) {
+      this.go('/notFound');
+      return;
+    }
 
-	forward() {
-		this.history.forward();
-	}
+    if (this._currentRoute) {
+      this._currentRoute.leave();
+    }
 
-	getRoute(pathname: string) {
-		return this.routes.find(route => route.match(pathname));
-	}
+    this._currentRoute = route;
+    route.render();
+  }
 }

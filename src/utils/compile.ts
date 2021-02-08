@@ -1,3 +1,3 @@
-export default function compile(template: string, props = {}) {
-	return Handlebars.compile(template)(props);
+export default function compile(template: string, props = {}): string {
+  return Handlebars.compile(template)(props);
 }

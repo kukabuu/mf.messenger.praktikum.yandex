@@ -1,43 +1,44 @@
 interface Callback<T> {
-	(...args: T[] | [] | MouseEvent[]): void;
+  (...args: T[] | [] | MouseEvent[]): void;
 }
 
 type ListenersType<T> = {
-	[key: string]: Callback<T>[];
+  [key: string]: Callback<T>[];
 };
 
 export default class EventBus<T> {
-	listeners: ListenersType<T>;
-	constructor() {
-		this.listeners = {};
-	}
+  listeners: ListenersType<T>;
 
-	on(event: string, callback: (...args: T[] | [] | MouseEvent[]) => void): void {
+  constructor() {
+    this.listeners = {};
+  }
 
-		if (!this.listeners[event]) {
-			this.listeners[event] = [];
-		}
+  on(event: string, callback: (...args: T[] | [] | MouseEvent[]) => void): void {
 
-		this.listeners[event].push(callback);
-	}
+    if (!this.listeners[event]) {
+      this.listeners[event] = [];
+    }
 
-	off(event: string, callback: Callback<T>): void {
-		if (!this.listeners[event]) {
-			throw new Error(`Нет события: ${event}`);
-		}
+    this.listeners[event].push(callback);
+  }
 
-		this.listeners[event] = this.listeners[event].filter(
-			listener => listener !== callback
-		);
-	}
+  off(event: string, callback: Callback<T>): void {
+    if (!this.listeners[event]) {
+      throw new Error(`Нет события: ${event}`);
+    }
 
-	emit(event: string, ...args: T[]): void {
-		if (!this.listeners[event]) {
-			throw new Error(`Нет события: ${event}`);
-		}
+    this.listeners[event] = this.listeners[event].filter(
+      listener => listener !== callback
+    );
+  }
 
-		this.listeners[event].forEach(function(listener: Callback<T>) {
-			listener(...args);
-		});
-	}
+  emit(event: string, ...args: T[]): void {
+    if (!this.listeners[event]) {
+      throw new Error(`Нет события: ${event}`);
+    }
+
+    this.listeners[event].forEach(function (listener: Callback<T>) {
+      listener(...args);
+    });
+  }
 }

@@ -1,68 +1,62 @@
-import { globalEventBus } from '../GlobalEventBus/index.js';
-import EventBus from '../EventBus/index.js';
-import { merge } from '../../utils/merge.js';
-
-type Object = {
-	[key: string]: any;
-}
+import { globalEventBus } from '../GlobalEventBus/index';
+import EventBus from '../EventBus/index';
+import { merge } from '../../utils/merge';
 
 enum Params {
-	actions = 'actions',
-	mutations = 'mutations'
+  actions = 'actions',
+  mutations = 'mutations'
 }
 
+type Callback<T1, T2> = (this: T1, payload: T2) => void | Record<string, unknown>
+type Actions = Record<string, Callback<Store, Record<string, unknown>>>
+type Mutations = Record<string, Callback<Record<string, unknown>, Record<string, unknown>>>
+
 export default class Store {
-	actions: Object
-	mutations: Object
-	state: Object
-	status: 'resting' | 'mutation' | 'action'
-	events: EventBus<any>
+  actions: Actions;
+  mutations: Mutations;
+  state: Record<string, unknown>;
+  status: 'resting' | 'mutation' | 'action';
+  events: EventBus<unknown>;
 
-	constructor(params: Object) {
-		this.actions = {};
-		this.mutations = {};
-		this.state = {};
+  constructor(params: Record<string, unknown>) {
+    this.actions = {};
+    this.mutations = {};
+    this.state = {};
 
-		this.status = 'resting';
-		this.events = globalEventBus;
+    this.events = globalEventBus;
 
-		if(params.hasOwnProperty(Params.actions)) {
-			this.actions = params.actions;
-		}
+    if (Object.hasOwnProperty.call(params, Params.actions)) {
+      this.actions = params.actions as Actions;
+    }
 
-		if(params.hasOwnProperty(Params.mutations)) {
-			this.mutations = params.mutations;
-		}
+    if (Object.hasOwnProperty.call(params, Params.mutations)) {
+      this.mutations = params.mutations as Mutations;
+    }
 
-		this.state = new Proxy((params.state || {}), {
-			set: function(state, key, value) {
+    this.state = new Proxy((params.state as Record<string, unknown> || {}), {
+      set: function (state, key: string | number, value) {
+        state[key] = value;
+        return true;
+      }
+    });
+  }
 
-				state[key] = value;
-				self.status = 'resting';
-				return true;
-			}
-		});
-	}
+  dispatch(actionKey: string, payload: Record<string, unknown>): boolean {
+    if (typeof this.actions[actionKey] !== 'function') {
+      console.error(`Action "${actionKey} doesn't exist.`);
+      return false;
+    }
+    this.actions[actionKey].call(this, payload);
+    return true;
+  }
 
-	dispatch(actionKey: string, payload: Object) {
-		if (typeof this.actions[actionKey] !== 'function') {
-			console.error(`Action "${actionKey} doesn't exist.`);
-			return false;
-		}
-		this.status = 'action';
-		this.actions[actionKey](this, payload);
-		return true;
-	}
-
-	commit(mutationKey: string, payload: Object) {
-		if (typeof this.mutations[mutationKey] !== 'function') {
-			console.log(`Mutation "${mutationKey}" doesn't exist`);
-			return false;
-		}
-		this.status = 'mutation';
-		let newState = this.mutations[mutationKey](this.state, payload);
-		this.state = merge(this.state, newState);
-		this.events.emit('state:change', this.state);
-		return true;
-	}
+  commit(mutationKey: string, payload: Record<string, unknown>): boolean {
+    if (typeof this.mutations[mutationKey] !== 'function') {
+      return false;
+    }
+    const newState = this.mutations[mutationKey].call(this, this.state, payload);
+    this.state = merge(this.state, newState as Record<string, unknown>);
+    this.events.emit('state:change', this.state);
+    return true;
+  }
 }

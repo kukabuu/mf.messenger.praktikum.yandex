@@ -1,61 +1,65 @@
-import ComponentController from '../../core/ComponentController/index.js';
-import Entry from '../../components/Entry/index.js';
-import { props } from './props.js';
-import { globalEventBus } from '../../core/GlobalEventBus/index.js';
-import { SignUpAPI } from '../../api/signUpAPI.js';
-import { router } from '../../core/Main/main.js';
-import { collectFormData } from '../../utils/collectFormData.js';
-import { notify } from '../../utils/notify.js';
+import ComponentController from '../../core/ComponentController/index';
+import Entry from '../../components/Entry/index';
+import { props } from './props';
+import { globalEventBus } from '../../core/GlobalEventBus/index';
+import { SignUpAPI } from '../../api/signUpAPI';
+import { router } from '../../core/Main/main';
+import { collectFormData } from '../../utils/collectFormData';
+import { notify } from '../../utils/notify';
 
 export default class SignUpController extends ComponentController {
-	static EVENTS = {
-		EVENT_VALIDATE: 'event-listener:validate-form',
-		EVENT_SEND_FORM: 'event-listener:send-signin-form',
-		EVENT_SEND_FORM_CLICKED: 'event-listener:send-signin-form-clicked'
-	};
+  static EVENTS = {
+    EVENT_VALIDATE: 'event-listener:validate-form',
+    EVENT_SEND_FORM: 'event-listener:send-signup-form',
+    EVENT_SEND_FORM_CLICKED: 'event-listener:send-signup-form-clicked'
+  };
 
-	static PATHS = {
-		CHATS: '/chats'
-	}
+  static PATHS = {
+    CHATS: '/chats'
+  };
+  private static __instance: SignUpController;
+  private isFormSubmit: boolean;
 
-	private static __instance: SignUpController
+  constructor() {
+    super(Entry, props);
+    if (SignUpController.__instance) {
+      return SignUpController.__instance;
+    }
+    SignUpController.__instance = this;
+    this.isFormSubmit = false;
+  }
 
-	constructor() {
-		super(Entry, props);
-		if (SignUpController.__instance) {
-			return SignUpController.__instance;
-		}
-		SignUpController.__instance = this;
-	}
+  emitListeners(): void {
+    globalEventBus.emit(SignUpController.EVENTS.EVENT_VALIDATE);
+    globalEventBus.emit(SignUpController.EVENTS.EVENT_SEND_FORM);
+  }
 
-	emitListeners() {
-		globalEventBus.emit(SignUpController.EVENTS.EVENT_VALIDATE);
-		globalEventBus.emit(SignUpController.EVENTS.EVENT_SEND_FORM);
-	}
+  subscribeState(): void {
+    globalEventBus.on(SignUpController.EVENTS.EVENT_SEND_FORM_CLICKED,
+      ($form: HTMLFormElement) => {
+        this.sendFormData($form);
+      });
+  }
 
-	subscribeState() {
-		globalEventBus.on(SignUpController.EVENTS.EVENT_SEND_FORM_CLICKED,
-			($form: HTMLFormElement) => {
-			console.log('from event-listener:submit-signup-form-clicked of signupcontroller')
-			this.sendFormData($form);
-		})
-	}
-
-	sendFormData($form: HTMLFormElement) {
-		const formData = collectFormData($form);
-		new SignUpAPI()
-			.create({data: formData})
-			.then((response) => {
-				console.log(response.responseText, response.status)
-				if (response.status !== 200) {
-					notify({
-						response,
-						block: this.block
-					})
-					return;
-				}
-				router.go(SignUpController.PATHS.CHATS);
-			})
-	}
+  sendFormData($form: HTMLFormElement): void {
+    if (this.isFormSubmit) {
+      return;
+    }
+    this.isFormSubmit = true;
+    const formData = collectFormData($form);
+    new SignUpAPI()
+      .create({data: formData})
+      .then(() => {
+        this.isFormSubmit = false;
+        router.go(SignUpController.PATHS.CHATS);
+      })
+      .catch((response) => {
+        this.isFormSubmit = false;
+        notify({
+          response,
+          block: this.block
+        });
+      });
+  }
 }
 
