@@ -51,6 +51,7 @@ export default class ChatController extends ComponentController {
   private isDeletingUser: boolean;
   private isCreatingChat: boolean;
   private isAddingUser: boolean;
+  private searchParams: Record<string, unknown>;
 
   constructor() {
     super(Chat, props.chatProps);
@@ -63,6 +64,7 @@ export default class ChatController extends ComponentController {
     this.isDeletingChat = false;
     this.isAddingUser = false;
     this.isDeletingUser = false;
+    this.searchParams = {};
   }
 
   emitListeners(): void {
@@ -108,6 +110,7 @@ export default class ChatController extends ComponentController {
     }
     this.isSearching = true;
     const formFields = collectFormData($form);
+    this.searchParams = {...formFields};
     return await new SearchAPI()
       .request({data: formFields})
       .then((response) => {
@@ -266,8 +269,8 @@ export default class ChatController extends ComponentController {
     this.isAddingUser = true;
     const ERROR_MESSAGE = 'Кажется, такого пользователя нет( Проверьте логин';
     const SUCCESS_MESSAGE = 'Пользователь успешно добавлен в чат';
-    const userData = await this.searchUsers($form);
-    if (!userData || !userData.length) {
+    const users = await this.searchUsers($form);
+    if (!users || !users.length) {
       this.isAddingUser = false;
       notify({
         response: {} as XMLHttpRequest,
@@ -277,12 +280,13 @@ export default class ChatController extends ComponentController {
       return;
     }
     const chatId = (globalStore.state.lastOpenedChat as Record<string, unknown>)?.id;
-    const userDataToSend = {
-      users: [userData[0].id],
+    const user = users.filter((user) => user.login === this.searchParams.login);
+    const userData = {
+      users: [user[0].id],
       chatId
     };
     new UserChatAPI()
-      .update({data: userDataToSend})
+      .update({data: userData})
       .then((response) => {
         this.isAddingUser = false;
         notify({
