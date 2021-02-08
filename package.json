@@ -7,10 +7,11 @@
     "test": "./node_modules/.bin/mocha",
     "less": "lessc ./src/less/main.less ./static/css/style.css",
     "watch": "ttsc -w",
-    "copy": "cp -p -r static/* build",
+    "tsc": "ttsc",
+    "copy": "pwd & ls -l & mkdir build & ls -l & cp -r static/* build & cd build & ls -l",
     "clean": "rm -r build",
     "lint": "eslint . --ext .ts",
-    "build": "npm run less & ttsc & npm run copy",
+    "build": "npm run less & npm run tsc & npm run copy",
     "start": "npm run clean & npm run build & node server"
   },
   "repository": {
