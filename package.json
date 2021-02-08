@@ -11,8 +11,8 @@
     "copy": "cp -r static/* build",
     "clean": "rm -r build",
     "lint": "eslint . --ext .ts",
-    "build": "npm run less & npm run tsc & npm run copy",
-    "start": "npm run clean & npm run build & node server"
+    "build": "npm run less && npm run tsc && npm run copy",
+    "start": "npm run clean && npm run build && node server"
   },
   "repository": {
     "type": "git",
