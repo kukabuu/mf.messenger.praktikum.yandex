@@ -8,8 +8,8 @@ enum Visibility {
 }
 
 type Props = {
-  status?: 'notification--error' | 'notification--success' | 'notification--warning'
-  title?: 'Ошибка!' | 'Успешно!' | 'Внимание!'
+  status?: 'notification--error' | 'notification--success' | 'notification--warning';
+  title?: 'Ошибка!' | 'Успешно!' | 'Внимание!';
   message?: string;
 }
 

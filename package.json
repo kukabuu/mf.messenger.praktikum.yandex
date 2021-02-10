@@ -8,10 +8,9 @@
     "less": "lessc ./src/less/main.less ./static/css/style.css",
     "watch": "ttsc -w",
     "copy": "shx cp -r static/* build",
-    "clean": "shx rm -r build",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --fix",
     "build": "npm run less && ttsc && npm run copy",
-    "start": "npm run clean && npm run build && node server"
+    "start": "npm run build && node server"
   },
   "repository": {
     "type": "git",

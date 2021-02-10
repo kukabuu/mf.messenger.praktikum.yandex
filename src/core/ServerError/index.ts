@@ -4,12 +4,12 @@ import { template } from './template';
 import compile from '../../utils/compile';
 
 type ServerErrorProps = {
-  error: string | number,
-  errorText: string,
+  error: string | number;
+  errorText: string;
   back: {
-    link: string,
-    text: string
-  }
+    link: string;
+    text: string;
+  };
 };
 
 export default class ServerError extends Block<ServerErrorProps> {

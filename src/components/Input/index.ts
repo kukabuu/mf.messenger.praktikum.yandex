@@ -5,32 +5,32 @@ import compile from '../../utils/compile';
 
 export type InputProps = {
   handleClick?: {
-    [key: string]: (...event: MouseEvent[]) => void
-  }
+    [key: string]: (...event: MouseEvent[]) => void;
+  };
   label: {
-    className: string
-    text: string
-  }
+    className: string;
+    text: string;
+  };
   floatedLabel?: {
-    className?: string,
-    text?: string
-  }
+    className?: string;
+    text?: string;
+  };
   group?: {
-    className?: string
-  }
+    className?: string;
+  };
   file?: {
-    className?: string
-  }
-  value?: string
-  id: string
-  className?: string
-  type?: 'text' | 'password' | 'email' | 'tel' | 'file'
-  placeholder?: string
-  name?: string
-  isReadOnly?: boolean
-  isHidden?: boolean
-  errorProfile?: string
-  errorEntry?: string
+    className?: string;
+  };
+  value?: string;
+  id: string;
+  className?: string;
+  type?: 'text' | 'password' | 'email' | 'tel' | 'file';
+  placeholder?: string;
+  name?: string;
+  isReadOnly?: boolean;
+  isHidden?: boolean;
+  errorProfile?: string;
+  errorEntry?: string;
 }
 
 export default class Input extends Block<InputProps> {

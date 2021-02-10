@@ -1,7 +1,7 @@
 import { isValidForm } from './validate';
 
 type formFields = {
-  [key: string]: string | File
+  [key: string]: string | File;
 }
 
 export function collectFormData($form: HTMLFormElement): formFields | undefined {

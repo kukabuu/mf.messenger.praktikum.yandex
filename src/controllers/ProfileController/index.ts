@@ -3,12 +3,13 @@ import Profile from '../../components/Profile/index';
 import { props } from './props';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
 import { router } from '../../core/Main/main';
-import { ProfileAPI } from '../../api/profileAPI';
+import ProfileAPI from '../../api/profileAPI';
 import { getUserInfo } from '../../utils/getUserInfo';
 import { InputProps } from '../../components/Input/index';
 import { inputs } from '../ProfileEditController/props';
 import concatInputs from '../../components/Input/concatInputs';
 import { notify } from '../../utils/notify';
+import { getAvatarLink } from '../../utils/getAvatarLink';
 
 export default class ProfileController extends ComponentController {
   static EVENTS = {
@@ -43,8 +44,6 @@ export default class ProfileController extends ComponentController {
   }
 
   async updateProps(): Promise<void> {
-    const BASE_URL = 'https://ya-praktikum.tech/';
-    const BASE_IMG = './images/profile_blob.png';
     const newProps = await getUserInfo();
     if (!newProps) {
       return;
@@ -65,9 +64,7 @@ export default class ProfileController extends ComponentController {
       newInputProps.push(prop);
     });
 
-    const avatar = newProps['avatar'] !== null
-      ? `${BASE_URL}${newProps['avatar']}`
-      : BASE_IMG;
+    const avatar = getAvatarLink(newProps);
 
     this.block?.setProps({
       inputs: concatInputs(newInputProps as InputProps[]),
@@ -81,18 +78,18 @@ export default class ProfileController extends ComponentController {
       return;
     }
     this.isLogoutClicked = true;
-    new ProfileAPI()
-      .logout()
+    ProfileAPI.logout()
       .then(() => {
-        this.isLogoutClicked = false;
         router.go(ProfileController.PATHS.SIGNIN);
       })
       .catch((response) => {
-        this.isLogoutClicked = false;
         notify({
           response,
           block: this.block
         });
+      })
+      .finally(() => {
+        this.isLogoutClicked = false;
       });
   }
 }

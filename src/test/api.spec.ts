@@ -1,7 +1,8 @@
 import { assert, expect } from 'chai';
 import sinon from 'sinon';
 
-import HTTP from '../core/HTTP';
+import HTTP, { METHOD } from '../core/HTTP';
+import { getQueryString } from '../utils/getQueryString';
 
 const defaultData = {
   'first_name': 'Test',
@@ -11,11 +12,14 @@ const defaultData = {
   'password': '1',
   'phone': '+7(999)999-00-00'
 };
-
 const dataJSON = JSON.stringify(defaultData);
+const stringifyData = (url: string): string => {
+  const data = getQueryString(defaultData);
+  return `${url}${data}`;
+};
 
 const mockedHeaders = {
-  'Content-type': 'application/json;charset=utf-8'
+  'Content-Type': 'application/json;charset=utf-8'
 };
 
 describe('API', function () {
@@ -32,73 +36,125 @@ describe('API', function () {
     this.xhr.restore();
   });
 
-  describe('requests:', function () {
-    it('should send GET request', function (done) {
+  describe('methods:', function () {
+    it('method .get should work correctly without data', () => {
+      const httpAPI = new HTTP('/');
+      httpAPI.request = sinon.spy();
+      httpAPI.get('/');
+      sinon.assert.calledWith(
+        httpAPI.request,
+        '/', {method: METHOD.GET}
+        );
+    });
+
+    it('method .get should work correctly with data', () => {
+      const url = '/chats';
+      const stringifiedData = stringifyData(url);
+      const httpAPI = new HTTP('/');
+      httpAPI.request = sinon.spy();
+      httpAPI.get(url, {data: defaultData});
+      sinon.assert.calledWith(
+        httpAPI.request,
+        `${stringifiedData}`, {data: defaultData, method: METHOD.GET}
+        );
+    });
+
+    it('method .post should work correctly with data', () => {
+      const url = '/chats';
+      const httpAPI = new HTTP('/');
+      httpAPI.request = sinon.spy();
+      httpAPI.post(url, {data: defaultData});
+      sinon.assert.calledWith(
+        httpAPI.request,
+        `${url}`, {data: defaultData, method: METHOD.POST}
+      );
+    });
+
+    it('method .post should work correctly without data', () => {
+      const url = '/chats';
+      const httpAPI = new HTTP('/');
+      httpAPI.request = sinon.spy();
+      httpAPI.post(url);
+      sinon.assert.calledWith(
+        httpAPI.request,
+        `${url}`, {method: METHOD.POST}
+      );
+    });
+
+    it('method .put should work correctly with data', () => {
+      const url = '/chats';
+      const httpAPI = new HTTP('/');
+      httpAPI.request = sinon.spy();
+      httpAPI.put(url, {data: defaultData});
+      sinon.assert.calledWith(
+        httpAPI.request,
+        `${url}`, {data: defaultData, method: METHOD.PUT}
+      );
+    });
+
+    it('method .put should work correctly without data', () => {
+      const url = '/chats';
+      const httpAPI = new HTTP('/');
+      httpAPI.request = sinon.spy();
+      httpAPI.put(url);
+      sinon.assert.calledWith(
+        httpAPI.request,
+        `${url}`, {method: METHOD.PUT}
+      );
+    });
+
+    it('method .delete should work correctly with data', () => {
+      const url = '/chats';
+      const httpAPI = new HTTP('/');
+      httpAPI.request = sinon.spy();
+      httpAPI.delete(url, {data: defaultData});
+      sinon.assert.calledWith(
+        httpAPI.request,
+        `${url}`, {data: defaultData, method: METHOD.DELETE}
+      );
+    });
+
+    it('method .delete should work correctly without data', () => {
+      const url = '/chats';
+      const httpAPI = new HTTP('/');
+      httpAPI.request = sinon.spy();
+      httpAPI.delete(url);
+      sinon.assert.calledWith(
+        httpAPI.request,
+        `${url}`, {method: METHOD.DELETE}
+      );
+    });
+
+    it('method .request should work correctly with data', function (done) {
       const httpAPI = new HTTP('/');
       httpAPI
-        .get('/')
+        .request('/', {data: defaultData})
         .then((result) => {
-          expect(result.method).eq('GET');
-          expect(result.status).eq(200);
+          expect(result.requestHeaders).to.eql(mockedHeaders);
+          expect(result.requestBody).to.eq(dataJSON);
           done();
         })
         .catch(done);
-
       this.requests[0].respond(
         200,
         mockedHeaders,
         dataJSON);
     });
 
-    it('should send POST request', function (done) {
+    it('method .request should work correctly without data', function (done) {
       const httpAPI = new HTTP('/');
       httpAPI
-        .post('/', {data: defaultData})
+        .request('/')
         .then((result) => {
-          expect(result.method).eq('POST');
-          expect(result.status).eq(200);
-          done();
-        })
-        .catch(done);
-
-      this.requests[0].respond(
-        200,
-        mockedHeaders,
-        dataJSON);
-    });
-
-    it('should send PUT request', function (done) {
-      const httpAPI = new HTTP('/');
-      httpAPI
-        .put('/', {data: defaultData})
-        .then((result) => {
-          expect(result.method).eq('PUT');
-          expect(result.status).eq(200);
+          expect(result.requestHeaders).to.eql(mockedHeaders);
+          assert.typeOf(result.requestBody, 'undefined');
           done();
         })
         .catch(done);
       this.requests[0].respond(
         200,
-        mockedHeaders,
-        dataJSON);
+        mockedHeaders);
     });
-
-    it('should send DELETE request', function (done) {
-      const httpAPI = new HTTP('/');
-      httpAPI
-        .delete('/', {data: defaultData})
-        .then((result) => {
-          expect(result.method).eq('DELETE');
-          expect(result.status).eq(200);
-          done();
-        })
-        .catch(done);
-      this.requests[0].respond(
-        200,
-        mockedHeaders,
-        dataJSON);
-    });
-
   });
 
   describe('data format:', function () {
@@ -125,7 +181,6 @@ describe('API', function () {
         .post('/', {data: 123})
         .then((result) => {
           expect(result.requestHeaders).to.eql(mockedHeaders);
-          expect(result.status).eq(200);
           assert.typeOf(result.requestBody, 'string');
           done();
         })
@@ -142,7 +197,6 @@ describe('API', function () {
         .post('/', {data: [1, 2, 3]})
         .then((result) => {
           expect(result.requestHeaders).to.eql(mockedHeaders);
-          expect(result.status).eq(200);
           assert.typeOf(result.requestBody, 'string');
           done();
         })
@@ -154,13 +208,11 @@ describe('API', function () {
     });
 
     it('should send null if data is null', function (done) {
-      const emptyHeaders = {};
       const httpAPI = new HTTP('/');
       httpAPI
         .post('/', {data: null})
         .then((result) => {
-          expect(result.requestHeaders).to.eql(emptyHeaders);
-          expect(result.status).eq(200);
+          expect(result.requestHeaders).to.eql(mockedHeaders);
           assert.typeOf(result.requestBody, 'undefined');
           done();
         })
@@ -172,6 +224,7 @@ describe('API', function () {
     });
 
     it('should send formData if data is formData', function (done) {
+      const emptyHeaders = {};
       const data = new FormData();
       data.append('name', 'Kate');
 
@@ -179,7 +232,8 @@ describe('API', function () {
       httpAPI
         .post('/', {data})
         .then((result) => {
-          expect(result.status).eq(200);
+          console.log(result);
+          expect(result.requestHeaders).to.eql(emptyHeaders);
           assert.typeOf(result.requestBody, 'FormData');
           done();
         })

@@ -2,12 +2,12 @@ import EventBus from '../EventBus/index';
 import { merge } from '../../utils/merge';
 
 interface ProxyConstructor {
-  new<T extends Record<string, unknown>, H extends Record<string, unknown>>(target: T, handler: ProxyHandler<H>): T
+  new<T extends Record<string, unknown>, H extends Record<string, unknown>>(target: T, handler: ProxyHandler<H>): T;
 }
 
 type _meta = {
-  tagName: string,
-  props: unknown | null
+  tagName: string;
+  props: unknown | null;
 };
 
 export default abstract class Block<T extends Record<string, unknown>> {
@@ -85,10 +85,6 @@ export default abstract class Block<T extends Record<string, unknown>> {
     return this.element;
   }
 
-  show(): void {
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-  }
-
   hide(): void {
     this._element.remove();
   }
@@ -130,7 +126,7 @@ export default abstract class Block<T extends Record<string, unknown>> {
   private _makePropsProxy<T extends Record<string, unknown>, P extends keyof S, S extends Record<string, unknown>>(props: T): T {
     const CustomProxy = Proxy as ProxyConstructor;
 
-    props = new CustomProxy(props, {
+    return new CustomProxy(props, {
       get(target: S, prop: P) {
         const value = target[prop];
         return (typeof value === 'function') ? value.bind(target) : value;
@@ -146,6 +142,5 @@ export default abstract class Block<T extends Record<string, unknown>> {
         throw new Error('Нет прав');
       }
     });
-    return props;
   }
 }
