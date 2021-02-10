@@ -4,21 +4,21 @@ import compile from '../../utils/compile';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
 
 type EventListener = {
-  event: string
-  callback: () => void
+  event: string;
+  callback: () => void;
 }
 
 export type EntryProps = {
-  className: string
-  header: string
-  inputs: string
-  button: string
-  notification: string
+  className: string;
+  header: string;
+  inputs: string;
+  button: string;
+  notification: string;
   back: {
-    link: string
-    text: string
-  }
-  eventListeners?: EventListener[]
+    link: string;
+    text: string;
+  };
+  eventListeners?: EventListener[];
 };
 
 export default class Entry extends Block<EntryProps> {

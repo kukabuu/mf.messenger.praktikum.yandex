@@ -1,6 +1,6 @@
 import { getQueryString } from '../../utils/getQueryString';
 
-enum METHOD {
+export enum METHOD {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
@@ -8,12 +8,12 @@ enum METHOD {
 }
 
 type Headers = {
-  [prop: string]: string
+  [prop: string]: string;
 }
 
 type Options = {
-  method: METHOD
-  headers?: Headers
+  method: METHOD;
+  headers?: Headers;
   data?: Record<string, unknown>;
 }
 

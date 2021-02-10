@@ -50,6 +50,7 @@ export class FormValidator {
     function submitHandle(_$form: HTMLFormElement, event: Event) {
       if (!this.checkFormValidity()) {
         event.preventDefault();
+        event.stopImmediatePropagation();
       }
     }
   }

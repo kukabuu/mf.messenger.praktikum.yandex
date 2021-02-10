@@ -19,6 +19,5 @@ export function getQueryString(data: StringIndexed): string | never {
     });
   }
 
-  return result.join('&');
+  return `?${result.join('&')}`;
 }
-

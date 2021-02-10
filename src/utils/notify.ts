@@ -3,11 +3,11 @@ import Notification from '../components/Notification/index';
 import { router } from '../core/Main/main';
 
 type Options = {
-  response: XMLHttpRequest
-  block: Block<Record<string, unknown>> | null
-  successMessage?: string,
-  errorMessage?: string,
-  showOnSuccess?: boolean
+  response: XMLHttpRequest;
+  block: Block<Record<string, unknown>> | null;
+  successMessage?: string;
+  errorMessage?: string;
+  showOnSuccess?: boolean;
 }
 
 function hideNotification(block: Block<Record<string, unknown>> | null) {

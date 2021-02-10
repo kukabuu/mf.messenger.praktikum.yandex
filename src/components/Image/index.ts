@@ -3,10 +3,10 @@ import { template } from './template';
 import compile from '../../utils/compile';
 
 type ImageProps = {
-  className?: string
-  src: string
-  name: string,
-  size: number
+  className?: string;
+  src: string;
+  name: string;
+  size: number;
 }
 
 export default class Image extends Block<ImageProps> {

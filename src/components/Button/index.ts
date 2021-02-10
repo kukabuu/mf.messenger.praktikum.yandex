@@ -5,16 +5,16 @@ import compile from '../../utils/compile';
 
 export type ButtonProps = {
   handleClick?: {
-    [key: string]: (...event: MouseEvent[]) => void
-  }
-  className?: string
-  type?: 'button' | 'submit' | 'reset'
-  text?: string
-  content?: string
+    [key: string]: (...event: MouseEvent[]) => void;
+  };
+  className?: string;
+  type?: 'button' | 'submit' | 'reset';
+  text?: string;
+  content?: string;
   data?: {
-    name?: string
-    value?: string
-  }
+    name?: string;
+    value?: string;
+  };
 }
 
 export default class Button extends Block<ButtonProps> {

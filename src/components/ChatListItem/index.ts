@@ -4,25 +4,25 @@ import { template } from './template';
 import compile from '../../utils/compile';
 
 export type ListItemProps = {
-  id: number
+  id: number;
   avatar: {
-    src: string
-    name: string
-  }
-  name: string
-  preview: string
+    src: string;
+    name: string;
+  };
+  name: string;
+  preview: string;
   time: {
-    full: string
-    less: string
-  }
+    full: string;
+    less: string;
+  };
   from?: {
-    text?: string
-    className?: string
-  }
+    text?: string;
+    className?: string;
+  };
   counter?: {
-    value?: string | number
-    className?: string
-  }
+    value?: string | number;
+    className?: string;
+  };
 };
 
 export default class ChatListItem extends Block<ListItemProps> {

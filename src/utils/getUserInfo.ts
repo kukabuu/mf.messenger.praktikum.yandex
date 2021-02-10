@@ -1,9 +1,8 @@
-import { ProfileAPI } from '../api/profileAPI';
+import ProfileAPI from '../api/profileAPI';
 import { router } from '../core/Main/main';
 
 export async function getUserInfo(): Promise<Record<string, unknown>> {
-  return new ProfileAPI()
-    .request()
+  return ProfileAPI.request()
     .then((response) => {
       return JSON.parse(response.response);
     })

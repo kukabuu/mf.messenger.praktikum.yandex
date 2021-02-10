@@ -5,10 +5,11 @@ import { InputProps } from '../../components/Input/index';
 import concatInputs from '../../components/Input/concatInputs';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
 import { router } from '../../core/Main/main';
-import { ProfileChangeInfoAPI } from '../../api/profileChangeInfoAPI';
+import ProfileChangeInfoAPI from '../../api/profileChangeInfoAPI';
 import { getUserInfo } from '../../utils/getUserInfo';
 import { collectFormData } from '../../utils/collectFormData';
 import { notify } from '../../utils/notify';
+import { getAvatarLink } from '../../utils/getAvatarLink';
 
 export default class ProfileEditController extends ComponentController {
   static EVENTS = {
@@ -58,8 +59,6 @@ export default class ProfileEditController extends ComponentController {
   }
 
   async updateProps(): Promise<void> {
-    const BASE_URL = 'https://ya-praktikum.tech/';
-    const BASE_IMG = './images/profile_blob.png';
     const newProps = await getUserInfo();
     const newInputProps: InputProps[] = [];
 
@@ -78,9 +77,7 @@ export default class ProfileEditController extends ComponentController {
       newInputProps.push(prop);
     });
 
-    const avatar = newProps['avatar'] !== null
-      ? `${BASE_URL}${newProps['avatar']}`
-      : BASE_IMG;
+    const avatar = getAvatarLink(newProps);
 
     this.block?.setProps({
       inputs: concatInputs(newInputProps as InputProps[]),
@@ -95,8 +92,7 @@ export default class ProfileEditController extends ComponentController {
     }
     this.isChangeInfoClicked = true;
     const formData = collectFormData($form);
-    new ProfileChangeInfoAPI()
-      .update({data: formData})
+    ProfileChangeInfoAPI.update({data: formData})
       .then(() => {
         this.isChangeInfoClicked = false;
         router.go(ProfileEditController.PATHS.PROFILE);
@@ -116,18 +112,18 @@ export default class ProfileEditController extends ComponentController {
     }
     this.isUpdateAvatarClicked = true;
     const formData = new FormData($form);
-    new ProfileChangeInfoAPI()
-      .upload({data: formData})
+    ProfileChangeInfoAPI.upload({data: formData})
       .then(() => {
-        this.isUpdateAvatarClicked = false;
         router.go(ProfileEditController.PATHS.PROFILE);
       })
       .catch((response) => {
-        this.isUpdateAvatarClicked = false;
         notify({
           response,
           block: this.block
         });
+      })
+      .finally(() => {
+        this.isUpdateAvatarClicked = false;
       });
   }
 }

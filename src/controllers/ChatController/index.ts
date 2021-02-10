@@ -1,30 +1,31 @@
 import ComponentController from '../../core/ComponentController/index';
 import Chat from '../../components/Chat/index';
+import Popup from '../../components/Popup/index';
+import Input from '../../components/Input/index';
 import * as props from './props';
 import { chatListProps, inputDeleteChatProps, popupDeleteChatProps } from './props';
-import { globalEventBus } from '../../core/GlobalEventBus/index';
-import { SearchAPI } from '../../api/searchAPI';
 import { ListItemProps } from '../../components/ChatListItem/index';
-import concatItems from '../../components/ChatListItem/concatItems';
-import { ChatAPI } from '../../api/chatAPI';
-import { isValidForm } from '../../utils/validate';
-import Input from '../../components/Input/index';
-import Popup from '../../components/Popup/index';
-import { UserChatAPI } from '../../api/userChatAPI';
+import { globalEventBus } from '../../core/GlobalEventBus/index';
 import { globalStore } from '../../store/index';
+import SearchAPI from '../../api/searchAPI';
+import UserChatAPI from '../../api/userChatAPI';
+import ChatAPI from '../../api/chatAPI';
+import concatItems from '../../components/ChatListItem/concatItems';
+import { isValidForm } from '../../utils/validate';
 import { notify } from '../../utils/notify';
 import { collectFormData } from '../../utils/collectFormData';
+import { getAvatarLink } from '../../utils/getAvatarLink';
 
 type UserProp = {
-  'id': number,
-  'first_name'?: string,
-  'second_name'?: string,
-  'display_name'?: string,
-  'login'?: string,
-  'email'?: string,
-  'phone'?: string,
-  'avatar': string,
-  'title'?: string
+  'id': number;
+  'first_name'?: string;
+  'second_name'?: string;
+  'display_name'?: string;
+  'login'?: string;
+  'email'?: string;
+  'phone'?: string;
+  'avatar': string;
+  'title'?: string;
 }
 
 export default class ChatController extends ComponentController {
@@ -111,10 +112,8 @@ export default class ChatController extends ComponentController {
     this.isSearching = true;
     const formFields = collectFormData($form);
     this.searchParams = {...formFields};
-    return await new SearchAPI()
-      .request({data: formFields})
+    return await SearchAPI.request({data: formFields})
       .then((response) => {
-        this.isSearching = false;
         notify({
           response,
           block: this.block
@@ -122,17 +121,17 @@ export default class ChatController extends ComponentController {
         return JSON.parse(response.response);
       })
       .catch((response) => {
-        this.isSearching = false;
         notify({
           response,
           block: this.block
         });
+      })
+      .finally(() => {
+        this.isSearching = false;
       });
   }
 
   updateChatList(newProps: UserProp[]): void {
-    const BASE_URL = 'https://ya-praktikum.tech/';
-    const BASE_IMG = './images/profile_blob.png';
     const newListItemProps: ListItemProps[] = [];
     const defaultProp = {...chatListProps};
     if (newProps.length === 0) {
@@ -141,9 +140,7 @@ export default class ChatController extends ComponentController {
       });
     }
     newProps.forEach((prop: UserProp) => {
-      const avatarLink = prop['avatar'] !== null
-        ? `${BASE_URL}${prop['avatar']}`
-        : BASE_IMG;
+      const avatarLink = getAvatarLink(prop);
 
       defaultProp.id = prop['id'] || 0;
       defaultProp.avatar.src = avatarLink;
@@ -163,10 +160,8 @@ export default class ChatController extends ComponentController {
     }
     this.isCreatingChat = true;
     const formFields = collectFormData($form);
-    new ChatAPI()
-      .create({data: formFields})
+    ChatAPI.create({data: formFields})
       .then((response) => {
-        this.isCreatingChat = false;
         this.getChats();
         notify({
           response,
@@ -176,17 +171,18 @@ export default class ChatController extends ComponentController {
         });
       })
       .catch((response) => {
-        this.isCreatingChat = false;
         notify({
           response,
           block: this.block
         });
+      })
+      .finally(() => {
+        this.isCreatingChat = false;
       });
   }
 
   async getChats(): Promise<void> {
-    await new ChatAPI()
-      .update()
+    await ChatAPI.update()
       .then((response) => {
         const newProps = JSON.parse(response.response);
         if (!newProps.length) {
@@ -207,10 +203,10 @@ export default class ChatController extends ComponentController {
   }
 
   openLastChat(chatProps: {
-    id: number,
-    title: string,
-    avatar: string,
-    created_by: number
+    id: number;
+    title: string;
+    avatar: string;
+    created_by: number;
   }): void {
     if (typeof chatProps.id === 'undefined') {
       return;
@@ -241,10 +237,8 @@ export default class ChatController extends ComponentController {
     const SUCCESS_MESSAGE = 'Ура! Чат удален.';
 
     const formFields = collectFormData($form);
-    new ChatAPI()
-      .delete({data: formFields})
+    ChatAPI.delete({data: formFields})
       .then((response) => {
-        this.isDeletingChat = false;
         this.getChats();
         notify({
           response,
@@ -254,11 +248,13 @@ export default class ChatController extends ComponentController {
         });
       })
       .catch((response) => {
-        this.isDeletingChat = false;
         notify({
           response,
           block: this.block
         });
+      })
+      .finally(() => {
+        this.isDeletingChat = false;
       });
   }
 
@@ -285,10 +281,8 @@ export default class ChatController extends ComponentController {
       users: [user[0].id],
       chatId
     };
-    new UserChatAPI()
-      .update({data: userData})
+    UserChatAPI.update({data: userData})
       .then((response) => {
-        this.isAddingUser = false;
         notify({
           response,
           block: this.block,
@@ -298,11 +292,13 @@ export default class ChatController extends ComponentController {
         this.getUsers();
       })
       .catch((response) => {
-        this.isAddingUser = false;
         notify({
           response,
           block: this.block
         });
+      })
+      .finally(() => {
+        this.isAddingUser = false;
       });
   }
 
@@ -311,8 +307,7 @@ export default class ChatController extends ComponentController {
     if (!chatId) {
       return;
     }
-    const users = await new UserChatAPI()
-      .request({id: chatId})
+    const users = await UserChatAPI.request({id: chatId})
       .then((response) => {
         return JSON.parse(response.response);
       })
@@ -359,15 +354,13 @@ export default class ChatController extends ComponentController {
     }
     const [{id}] = user;
     const chatId = (globalStore.state.lastOpenedChat as Record<string, unknown>)?.id;
-    new UserChatAPI()
-      .delete({
-        data: {
-          users: [id],
-          chatId
-        }
-      })
+    UserChatAPI.delete({
+      data: {
+        users: [id],
+        chatId
+      }
+    })
       .then((response) => {
-        this.isDeletingUser = false;
         notify({
           response,
           block: this.block,
@@ -377,11 +370,13 @@ export default class ChatController extends ComponentController {
         this.getUsers();
       })
       .catch((response) => {
-        this.isDeletingUser = false;
         notify({
           response,
           block: this.block
         });
+      })
+      .finally(() => {
+        this.isDeletingUser = false;
       });
   }
 }

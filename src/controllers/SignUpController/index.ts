@@ -2,7 +2,7 @@ import ComponentController from '../../core/ComponentController/index';
 import Entry from '../../components/Entry/index';
 import { props } from './props';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
-import { SignUpAPI } from '../../api/signUpAPI';
+import SignUpAPI from '../../api/signUpAPI';
 import { router } from '../../core/Main/main';
 import { collectFormData } from '../../utils/collectFormData';
 import { notify } from '../../utils/notify';
@@ -47,18 +47,18 @@ export default class SignUpController extends ComponentController {
     }
     this.isFormSubmit = true;
     const formData = collectFormData($form);
-    new SignUpAPI()
-      .create({data: formData})
+    SignUpAPI.create({data: formData})
       .then(() => {
-        this.isFormSubmit = false;
         router.go(SignUpController.PATHS.CHATS);
       })
       .catch((response) => {
-        this.isFormSubmit = false;
         notify({
           response,
           block: this.block
         });
+      })
+      .finally(() => {
+        this.isFormSubmit = false;
       });
   }
 }

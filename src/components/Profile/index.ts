@@ -5,8 +5,8 @@ import compile from '../../utils/compile';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
 
 type EventListener = {
-  event: string,
-  callback: () => void
+  event: string;
+  callback: () => void;
 }
 
 export enum METHODS {
@@ -15,32 +15,32 @@ export enum METHODS {
 }
 
 export type ProfileProps = {
-  header?: string
-  inputs: string
-  popup?: string
-  button?: string
-  avatar: string
+  header?: string;
+  inputs: string;
+  popup?: string;
+  button?: string;
+  avatar: string;
   avatarInfo: {
-    name: string
-    link?: string
-    linkText?: string
-    classToChange?: string
-  }
+    name: string;
+    link?: string;
+    linkText?: string;
+    classToChange?: string;
+  };
   form?: {
-    className?: string
-    method?: METHODS.GET | METHODS.POST
-  }
+    className?: string;
+    method?: METHODS.GET | METHODS.POST;
+  };
   footerLinks?: {
-    name: string
-    href: string
-    className?: string
-  }[]
+    name: string;
+    href: string;
+    className?: string;
+  }[];
   back: {
-    link: string
-    src: string
-    text: string
-  }
-  eventListeners?: EventListener[]
+    link: string;
+    src: string;
+    text: string;
+  };
+  eventListeners?: EventListener[];
 };
 
 export default class Profile extends Block<ProfileProps> {

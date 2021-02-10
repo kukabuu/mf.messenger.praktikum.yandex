@@ -3,36 +3,36 @@ import { template } from './template';
 import compile from '../../utils/compile';
 
 export type MessageProps = {
-  isEmpty?: boolean
+  isEmpty?: boolean;
   empty?: {
-    text?: string
-  }
-  from?: boolean
+    text?: string;
+  };
+  from?: boolean;
   position: {
-    className: string
-  },
+    className: string;
+  };
   person?: {
-    src?: string
-    name?: string
-  },
-  isAttachment?: boolean
+    src?: string;
+    name?: string;
+  };
+  isAttachment?: boolean;
   attachment?: {
-    src?: string
-    name?: string
-    className?: string
-  }
+    src?: string;
+    name?: string;
+    className?: string;
+  };
   message?: {
-    className?: string
-    content?: string
-  },
+    className?: string;
+    content?: string;
+  };
   date?: {
-    value?: string
-    className?: string
-  }
+    value?: string;
+    className?: string;
+  };
   time: {
-    full: string
-    less: string
-  }
+    full: string;
+    less: string;
+  };
 };
 
 export default class DialogMessage extends Block<MessageProps> {

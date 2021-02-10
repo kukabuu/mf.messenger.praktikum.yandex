@@ -5,16 +5,16 @@ import { globalEventBus } from '../../core/GlobalEventBus/index';
 import compile from '../../utils/compile';
 
 type EventListener = {
-  event: string,
-  callback: () => void
+  event: string;
+  callback: () => void;
 }
 
 type PopupProps = {
-  header: string
-  input: string
-  button: string
-  cancelButton?: string
-  eventListeners?: EventListener[]
+  header: string;
+  input: string;
+  button: string;
+  cancelButton?: string;
+  eventListeners?: EventListener[];
 };
 
 export default class Popup extends Block<PopupProps> {
