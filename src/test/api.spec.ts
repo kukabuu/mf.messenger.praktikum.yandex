@@ -232,7 +232,6 @@ describe('API', function () {
       httpAPI
         .post('/', {data})
         .then((result) => {
-          console.log(result);
           expect(result.requestHeaders).to.eql(emptyHeaders);
           assert.typeOf(result.requestBody, 'FormData');
           done();

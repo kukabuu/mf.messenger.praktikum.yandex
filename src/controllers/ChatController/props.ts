@@ -13,6 +13,11 @@ import { addEventForChild } from '../../utils/addEvent';
 import { togglePopup } from '../../utils/togglePopup';
 import { closePopup } from '../../utils/closePopup';
 
+import userBlob from '../../assets/images/user_blob.png';
+import catImage from '../../assets/images/cat.jpg';
+import attachButton from '../../assets/images/attach.png';
+import backButton from '../../assets/images/back.png';
+
 function toggleTooltip(element: HTMLElement) {
   const $tooltip = element
     ?.parentElement
@@ -256,7 +261,7 @@ export const dialogProps = [
       className: 'message--left'
     },
     person: {
-      src: 'images/user_blob.png',
+      src: userBlob,
       name: 'Андрей'
     },
     message: {
@@ -289,12 +294,12 @@ export const dialogProps = [
       className: 'message--left'
     },
     person: {
-      src: 'images/user_blob.png',
+      src: userBlob,
       name: 'Андрей'
     },
     isAttachment: true,
     attachment: {
-      src: 'images/cat.jpg',
+      src: catImage,
       name: 'Кот',
       className: 'message--from attachment'
     },
@@ -343,7 +348,7 @@ export const chatProps = {
   header: {
     person: {
       name: 'Андрей',
-      src: 'images/user_blob.png'
+      src: userBlob
     },
     tooltip: {
       options: [
@@ -378,7 +383,7 @@ export const chatProps = {
         className: 'dialog__button dialog__attachments js-tooltip__button',
         content: new Image({
           name: 'Добавить',
-          src: './images/attach.png',
+          src: attachButton,
           size: 32
         }).getContent().innerHTML
       }).getContent().innerHTML,
@@ -404,7 +409,7 @@ export const chatProps = {
         type: 'submit',
         content: new Image({
           name: 'Отправить',
-          src: './images/back.png',
+          src: backButton,
           className: 'button--send',
           size: 28
         }).getContent().innerHTML

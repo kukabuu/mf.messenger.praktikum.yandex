@@ -11,6 +11,8 @@ import { globalEventBus } from '../../core/GlobalEventBus/index';
 import { addEventForChild } from '../../utils/addEvent';
 import { togglePopup } from '../../utils/togglePopup';
 import { closePopup } from '../../utils/closePopup';
+import profileBlob from '../../assets/images/profile_blob.png';
+import backButton from '../../assets/images/back.png';
 
 function submitForm($form: HTMLFormElement, event: Event) {
   event.preventDefault();
@@ -206,7 +208,7 @@ export const popupProps = {
 };
 
 export const props: ProfileProps = {
-  avatar: './images/profile_blob.png',
+  avatar: profileBlob,
   avatarInfo: {
     name: 'Аватар',
     link: '#popup-update-avatar',
@@ -226,7 +228,7 @@ export const props: ProfileProps = {
   back: {
     link: 'profile',
     text: 'Назад',
-    src: './images/Back.png'
+    src: backButton
   },
   popup: new Popup(popupProps).element.innerHTML,
   eventListeners: [

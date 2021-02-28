@@ -3,6 +3,7 @@ import Block from '../../core/Block/index';
 import { template } from './template';
 import compile from '../../utils/compile';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
+import profileBaseImage from '../../assets/images/profile_blob.png';
 
 type EventListener = {
   event: string;
@@ -58,7 +59,7 @@ export default class Profile extends Block<ProfileProps> {
     popup = '',
     header = '',
     button = '',
-    avatar = './images/profile_blob.png',
+    avatar = profileBaseImage,
     ...props
   }: ProfileProps) {
     super({
