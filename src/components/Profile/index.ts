@@ -3,7 +3,7 @@ import Block from '../../core/Block/index';
 import { template } from './template';
 import compile from '../../utils/compile';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
-import profileBaseImage from '../../assets/images/profile_blob.png';
+import profileBaseImage from '../../../static/assets/images/profile_blob.png';
 
 type EventListener = {
   event: string;

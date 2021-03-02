@@ -1,7 +1,7 @@
 import { assert, expect } from 'chai';
 import sinon from 'sinon';
 
-import HTTP, { METHOD } from '../core/HTTP';
+import HTTP, { METHOD } from '../core/HTTP/index';
 import { getQueryString } from '../utils/getQueryString';
 
 const defaultData = {

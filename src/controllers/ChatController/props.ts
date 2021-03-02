@@ -13,10 +13,10 @@ import { addEventForChild } from '../../utils/addEvent';
 import { togglePopup } from '../../utils/togglePopup';
 import { closePopup } from '../../utils/closePopup';
 
-import userBlob from '../../assets/images/user_blob.png';
-import catImage from '../../assets/images/cat.jpg';
-import attachButton from '../../assets/images/attach.png';
-import backButton from '../../assets/images/back.png';
+import userBlob from '../../../static/assets/images/user_blob.png';
+import catImage from '../../../static/assets/images/cat.jpg';
+import attachButton from '../../../static/assets/images/attach.png';
+import backButton from '../../../static/assets/images/back.png';
 
 function toggleTooltip(element: HTMLElement) {
   const $tooltip = element

@@ -4,8 +4,8 @@ import concatInputs from '../../components/Input/concatInputs';
 import { InputProps } from '../../components/Input/index';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
 import { addEventForChild } from '../../utils/addEvent';
-import profileBlob from '../../assets/images/profile_blob.png';
-import backButton from '../../assets/images/back.png';
+import profileBlob from '../../../static/assets/images/profile_blob.png';
+import backButton from '../../../static/assets/images/back.png';
 
 export const inputs: InputProps[] = [
   {

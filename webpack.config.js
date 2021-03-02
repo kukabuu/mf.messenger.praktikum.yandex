@@ -3,12 +3,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: ['./src/core/Main/main.ts', './src/less/main.less'],
   output: {
     path: path.resolve(__dirname, 'build'),
-    publicPath: '',
+    publicPath: '/',
     filename: 'main-[hash].js'
   },
   resolve: {
@@ -48,8 +49,14 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [{
+        from: "static",
+        to: "build"
+      }],
+    }),
     new HtmlWebpackPlugin({
-      template: 'index.html',
+      template: './static/index.html',
       filename: 'index.html',
       minify: {
         collapseWhitespace: true,
@@ -70,6 +77,7 @@ module.exports = {
     historyApiFallback: true,
     compress: true,
     writeToDisk: true,
+    host: '0.0.0.0',
     port: 3000,
   },
 };

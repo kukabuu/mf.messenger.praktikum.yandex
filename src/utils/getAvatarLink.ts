@@ -1,4 +1,4 @@
-import BASE_IMG from '../assets/images/profile_blob.png';
+import BASE_IMG from '../../static/assets/images/profile_blob.png';
 
 export function getAvatarLink(userData: Record<string, unknown>): string {
   const BASE_URL = 'https://ya-praktikum.tech/';
