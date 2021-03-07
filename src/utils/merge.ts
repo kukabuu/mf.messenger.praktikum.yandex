@@ -1,5 +1,6 @@
 export function merge<T extends Record<string, unknown>>(lhs: T, rhs: T): T {
-  const target = lhs as Record<string, unknown>;
+  const target: Record<string, unknown> = {};
+  merger(lhs);
   merger(rhs);
 
   function merger(obj: Record<string, unknown>) {
