@@ -8,8 +8,8 @@ export type MessageProps = {
     text?: string;
   };
   from?: boolean;
-  position: {
-    className: string;
+  position?: {
+    className?: string;
   };
   person?: {
     src?: string;
@@ -29,9 +29,9 @@ export type MessageProps = {
     value?: string;
     className?: string;
   };
-  time: {
-    full: string;
-    less: string;
+  time?: {
+    full?: string;
+    less?: string;
   };
 };
 
@@ -57,6 +57,13 @@ export default class DialogMessage extends Block<MessageProps> {
         className: '',
         content: ''
       },
+      position = {
+        className: ''
+      },
+      time = {
+        full: '',
+        less: ''
+      },
       date = {
         value: '',
         className: 'i-display-none'
@@ -71,7 +78,9 @@ export default class DialogMessage extends Block<MessageProps> {
       person,
       isAttachment,
       attachment,
+      position,
       message,
+      time,
       date,
       ...props
     });

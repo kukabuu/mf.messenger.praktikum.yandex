@@ -1,7 +1,7 @@
 import { assert, expect } from 'chai';
 import sinon from 'sinon';
 
-import HTTP, { METHOD } from '../core/HTTP';
+import HTTP, { METHOD } from '../core/HTTP/index';
 import { getQueryString } from '../utils/getQueryString';
 
 const defaultData = {
@@ -232,7 +232,6 @@ describe('API', function () {
       httpAPI
         .post('/', {data})
         .then((result) => {
-          console.log(result);
           expect(result.requestHeaders).to.eql(emptyHeaders);
           assert.typeOf(result.requestBody, 'FormData');
           done();

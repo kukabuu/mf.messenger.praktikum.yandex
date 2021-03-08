@@ -15,7 +15,6 @@ export default class Store {
   actions: Actions;
   mutations: Mutations;
   state: Record<string, unknown>;
-  status: 'resting' | 'mutation' | 'action';
   events: EventBus<unknown>;
 
   constructor(params: Record<string, unknown>) {
@@ -41,7 +40,7 @@ export default class Store {
     });
   }
 
-  dispatch(actionKey: string, payload: Record<string, unknown>): boolean {
+  dispatch(actionKey: string, payload: Record<string, unknown> | number): boolean {
     if (typeof this.actions[actionKey] !== 'function') {
       console.error(`Action "${actionKey} doesn't exist.`);
       return false;

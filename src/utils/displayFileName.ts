@@ -6,7 +6,7 @@ export function displayFileName($input: HTMLInputElement): void {
     return;
   }
 
-  $name!.textContent = $input?.files[0]?.name;
+  $name.textContent = $input?.files[0]?.name;
   $name?.classList.remove('i-display-none');
   $label?.classList.add('i-display-none');
 }

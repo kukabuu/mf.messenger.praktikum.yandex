@@ -8,6 +8,8 @@ import { FormValidator } from '../../utils/validate';
 import { METHODS, ProfileProps } from '../../components/Profile/index';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
 import { addEventForChild } from '../../utils/addEvent';
+import profileBlob from '../../../static/assets/images/profile_blob.png';
+import backButton from '../../../static/assets/images/back.png';
 
 function submitForm($form: HTMLFormElement, event: Event) {
   event.preventDefault();
@@ -75,7 +77,7 @@ const inputs: InputProps[] = [
 
 export const props: ProfileProps = {
   header: '',
-  avatar: './images/profile_blob.png',
+  avatar: profileBlob,
   avatarInfo: {
     name: 'Аватар'
   },
@@ -92,7 +94,7 @@ export const props: ProfileProps = {
   back: {
     link: 'profile',
     text: 'Назад',
-    src: './images/Back.png'
+    src: backButton
   },
   eventListeners: [
     {

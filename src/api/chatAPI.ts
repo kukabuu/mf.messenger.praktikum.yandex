@@ -13,5 +13,9 @@ export default {
 
   delete(data: Record<string, unknown>): Promise<XMLHttpRequest> {
     return chatAPIInstance.delete('/', data);
+  },
+
+  getToken(chatId: number | string): Promise<XMLHttpRequest> {
+    return chatAPIInstance.post(`/token/${chatId}`);
   }
 };

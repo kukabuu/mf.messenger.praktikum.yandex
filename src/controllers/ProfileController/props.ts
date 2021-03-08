@@ -4,6 +4,8 @@ import concatInputs from '../../components/Input/concatInputs';
 import { InputProps } from '../../components/Input/index';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
 import { addEventForChild } from '../../utils/addEvent';
+import profileBlob from '../../../static/assets/images/profile_blob.png';
+import backButton from '../../../static/assets/images/back.png';
 
 export const inputs: InputProps[] = [
   {
@@ -132,7 +134,7 @@ export const inputs: InputProps[] = [
 
 export const props = {
   header: '',
-  avatar: './images/profile_blob.png',
+  avatar: profileBlob,
   avatarInfo: {
     name: 'Аватар'
   },
@@ -155,7 +157,7 @@ export const props = {
   back: {
     link: 'chats',
     text: 'Назад',
-    src: './images/Back.png'
+    src: backButton
   },
   eventListeners: [
     {

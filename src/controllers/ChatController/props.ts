@@ -3,7 +3,6 @@ import Input, { InputProps } from '../../components/Input/index';
 import Button from '../../components/Button/index';
 import Popup from '../../components/Popup/index';
 import Image from '../../components/Image/index';
-import concatMessage from '../../components/DialogMessage/concatMessage';
 
 import { globalEventBus } from '../../core/GlobalEventBus/index';
 
@@ -13,6 +12,12 @@ import { addEventForChild } from '../../utils/addEvent';
 import { togglePopup } from '../../utils/togglePopup';
 import { closePopup } from '../../utils/closePopup';
 
+import userBlob from '../../../static/assets/images/user_blob.png';
+import attachButton from '../../../static/assets/images/attach.png';
+import backButton from '../../../static/assets/images/back.png';
+import DialogMessage from '../../components/DialogMessage/index';
+import { globalStore } from '../../store/index';
+
 function toggleTooltip(element: HTMLElement) {
   const $tooltip = element
     ?.parentElement
@@ -21,6 +26,11 @@ function toggleTooltip(element: HTMLElement) {
   if (!$tooltip) {
     return;
   }
+
+  if (!globalStore.state.activeChat) {
+    return;
+  }
+
   if ($tooltip.classList.contains('i-display-none')) {
     $tooltip.classList.remove('i-display-none');
   } else {
@@ -249,74 +259,29 @@ export const popupDeleteChatProps = {
   ]
 };
 
-export const dialogProps = [
-  {
-    from: true,
-    position: {
-      className: 'message--left'
-    },
-    person: {
-      src: 'images/user_blob.png',
-      name: 'Андрей'
-    },
-    message: {
-      className: 'message--from',
-      content: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Accusamus animi architecto at cum eos esse et, hic impedit,
-									laboriosam neque odit placeat quasi quidem rem sed similique
-									suscipit tempore, voluptas? Accusamus blanditiis
-									excepturi fuga fugit, illo ipsum nesciunt odit omnis pariatur
-									quisquam, reiciendis, rerum sapiente unde vitae voluptatibus?
-									Alias beatae commodi distinctio est maxime mollitia nemo repellat
-									repudiandae sequi voluptatibus. Distinctio itaque
-									perferendis perspiciatis quis quo suscipit tempore voluptate?
-									Commodi deserunt dicta et ex impedit iusto magnam maxime repellat.
-									Alias dignissimos ducimus ea esse maxime necessitatibus neque numquam,
-									ut voluptas.`
-    },
-    time: {
-      full: '2020-11-01 20:00',
-      less: '20:00'
-    },
-    date: {
-      className: '',
-      value: '1 ноября'
-    }
+export const dialogProps = {
+  from: true,
+  position: {
+    className: ''
   },
-  {
-    from: true,
-    position: {
-      className: 'message--left'
-    },
-    person: {
-      src: 'images/user_blob.png',
-      name: 'Андрей'
-    },
-    isAttachment: true,
-    attachment: {
-      src: 'images/cat.jpg',
-      name: 'Кот',
-      className: 'message--from attachment'
-    },
-    time: {
-      full: '2020-11-01 20:00',
-      less: '20:00'
-    }
+  person: {
+    src: userBlob,
+    name: ''
   },
-  {
-    position: {
-      className: 'message--right'
-    },
-    message: {
-      className: 'message--yours',
-      content: 'Круто!'
-    },
-    time: {
-      full: '2020-11-01 21:00',
-      less: '21:00'
-    }
+  message: {
+    className: '',
+    content: ''
+  },
+  time: {
+    full: '',
+    less: ''
+  },
+  date: {
+    className: '',
+    value: ''
   }
-];
+};
+
 export const chatListProps = {
   id: 0,
   avatar: {
@@ -342,8 +307,8 @@ export const chatProps = {
   },
   header: {
     person: {
-      name: 'Андрей',
-      src: 'images/user_blob.png'
+      name: 'Здесь будет название чата, как только вы его выберите',
+      src: userBlob
     },
     tooltip: {
       options: [
@@ -372,13 +337,16 @@ export const chatProps = {
       value: '#popup-add-chat'
     }
   }).getContent().innerHTML,
+  dialog: new DialogMessage({
+    isEmpty: true
+  }).getContent().innerHTML,
   footer: {
     attachments: {
       buttonAddAttachments: new Button({
         className: 'dialog__button dialog__attachments js-tooltip__button',
         content: new Image({
           name: 'Добавить',
-          src: './images/attach.png',
+          src: attachButton,
           size: 32
         }).getContent().innerHTML
       }).getContent().innerHTML,
@@ -400,18 +368,17 @@ export const chatProps = {
       placeholder: 'Сообщение',
       isRequired: true,
       buttonSendMessage: new Button({
-        className: 'dialog__button',
+        className: 'dialog__button js-send-message',
         type: 'submit',
         content: new Image({
           name: 'Отправить',
-          src: './images/back.png',
+          src: backButton,
           className: 'button--send',
           size: 28
         }).getContent().innerHTML
       }).getContent().innerHTML
     }
   },
-  dialog: concatMessage(dialogProps),
   eventListeners: [
     {
       event: 'event-listener:create-chat',
@@ -424,6 +391,34 @@ export const chatProps = {
             event.preventDefault();
             const $form = $element.closest('.js-form');
             globalEventBus.emit('event-listener:create-chat-clicked', $form);
+          });
+      }
+    },
+    {
+      event: 'event-listener:select-chat',
+      callback: (): void => {
+        addEventForChild(
+          document.body,
+          'click',
+          '.js-chat-item',
+          ($element: HTMLElement, event: Event) => {
+            event.preventDefault();
+            const chatId = $element.dataset.id;
+            globalEventBus.emit('event-listener:select-chat-clicked', chatId);
+          });
+      }
+    },
+    {
+      event: 'event-listener:send-message',
+      callback: (): void => {
+        addEventForChild(
+          document.body,
+          'click',
+          '.js-send-message',
+          ($element: HTMLElement, event: Event) => {
+            event.preventDefault();
+            const $form = $element.closest('.js-form');
+            globalEventBus.emit('event-listener:send-message-clicked', $form);
           });
       }
     },

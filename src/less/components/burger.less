@@ -1,26 +1,26 @@
 .burger {
-	display: block;
-	position: relative;
-	width: 4px;
-	height: 4px;
-	border-radius: 50%;
-	background-color: @color-black;
+  display: block;
+  position: relative;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: @color-black;
 
-	&::before,
-	&::after {
-		content: '';
-		position: absolute;
-		width: 4px;
-		height: 4px;
-		border-radius: 50%;
-		background-color: @color-black;
-	}
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: @color-black;
+  }
 
-	&::before {
-		top: 8px;
-	}
+  &::before {
+    top: 8px;
+  }
 
-	&::after {
-		bottom: 8px;
-	}
+  &::after {
+    bottom: 8px;
+  }
 }
