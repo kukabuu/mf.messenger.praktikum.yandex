@@ -52,7 +52,7 @@ export default class WebSocketService {
 
   onError(): void {
     this.socket.addEventListener('error', (event) => {
-      console.log('Ошибка', event);
+      throw new Error(`Ошибка: ${event}`);
     });
   }
 
@@ -73,7 +73,6 @@ export default class WebSocketService {
   }
 
   getOld(count: string): void {
-    console.log('from socket get old');
     this.socket.send(JSON.stringify({
       content: count,
       type: 'get old'
