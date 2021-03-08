@@ -54,6 +54,7 @@ export const template = `
       {{#with sendMessage}}
 				<form class="dialog__form js-form" action="#">
 					<input class="dialog__footer--message"
+					       autocomplete="off"
 								 type="text"
 								 name="{{name}}"
 								 placeholder="{{placeholder}}"

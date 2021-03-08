@@ -35,7 +35,6 @@ export const template = `
 						{{message.content}}
 					</p>
 				{{/if}}
-				<span class="message__delivery"></span>
 				<time class="message__time time--blue" datetime="{{time.full}}">{{time.less}}</time>
 			</div>
 		</div>

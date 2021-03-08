@@ -1,37 +1,37 @@
 .search {
-	display: block;
-	position: relative;
+  display: block;
+  position: relative;
 
-	&__input {
-		display: block;
-		width: 100%;
-		border: 0;
-		border-radius: .5rem;
-		background-color: @color-tertiary-dark;
-		padding: 1rem 1rem 1rem 3.5rem;
-		position: relative;
-	}
+  &__input {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 0.5rem;
+    background-color: @color-tertiary-dark;
+    padding: 1rem 1rem 1rem 3.5rem;
+    position: relative;
+  }
 
-	&__input::placeholder {
-		color: @color-secondary;
-		font-size: 1.2rem;
-		text-align: center;
-		text-indent: -3.5rem;
-	}
+  &__input::placeholder {
+    color: @color-secondary;
+    font-size: 1.2rem;
+    text-align: center;
+    text-indent: -3.5rem;
+  }
 
-	&__icon {
-		background: url('../../../static/assets/images/magnifier.png');
-		width: 10px;
-		height: 10px;
-		display: block;
-		position: absolute;
-		top: 1.3rem;
-		left: 1.2rem;
-		z-index: 100;
-		transition: left .05s ease-in;
-	}
+  &__icon {
+    background: url('../../../static/assets/images/magnifier.png');
+    width: 10px;
+    height: 10px;
+    display: block;
+    position: absolute;
+    top: 1.3rem;
+    left: 1.2rem;
+    z-index: 100;
+    transition: left 0.05s ease-in;
+  }
 
-	&__input:placeholder-shown + &__icon {
-		left: 10.5rem;
-	}
+  &__input:placeholder-shown + &__icon {
+    left: 10.5rem;
+  }
 }

@@ -1,5 +1,5 @@
 export const template = `
-	<li class="list__item" data-id="{{ id }}">
+	<li class="list__item js-chat-item" data-id="{{ id }}">
 		<img class="item__image" src="{{avatar.src}}" alt="{{avatar.name}}" width="48" height="48">
 		<div class="item__details">
 			<span class="item__name">

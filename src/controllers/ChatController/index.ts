@@ -3,7 +3,7 @@ import Chat from '../../components/Chat/index';
 import Popup from '../../components/Popup/index';
 import Input from '../../components/Input/index';
 import * as props from './props';
-import { chatListProps, inputDeleteChatProps, popupDeleteChatProps } from './props';
+import { chatListProps, dialogProps, inputDeleteChatProps, popupDeleteChatProps } from './props';
 import { ListItemProps } from '../../components/ChatListItem/index';
 import { globalEventBus } from '../../core/GlobalEventBus/index';
 import { globalStore } from '../../store/index';
@@ -15,6 +15,11 @@ import { isValidForm } from '../../utils/validate';
 import { notify } from '../../utils/notify';
 import { collectFormData } from '../../utils/collectFormData';
 import { getAvatarLink } from '../../utils/getAvatarLink';
+import WebSocketService from '../../core/WebSocketService/index';
+import { getUserInfo } from '../../utils/getUserInfo';
+import concatMessage from '../../components/DialogMessage/concatMessage';
+import { MessageProps } from '../../components/DialogMessage/index';
+import { cloneDeep } from '../../utils/cloneDeep';
 
 type UserProp = {
   'id': number;
@@ -28,22 +33,40 @@ type UserProp = {
   'title'?: string;
 }
 
+type chatProp = {
+  id: number;
+  title: string;
+  avatar: string;
+  created_by: number;
+}
+
+type messageDataProp = {
+  id: number;
+  list: [];
+}
+
 export default class ChatController extends ComponentController {
   static EVENTS = {
     EVENT_DISPLAY_NAME: 'event-listener:display-file-name',
     EVENT_VALIDATE: 'event-listener:validate-form',
     EVENT_CREATE_CHAT: 'event-listener:create-chat',
     EVENT_DELETE_CHAT: 'event-listener:delete-chat',
+    EVENT_SELECT_CHAT: 'event-listener:select-chat',
     EVENT_ADD_USER: 'event-listener:add-user',
     EVENT_DELETE_USER: 'event-listener:delete-user',
     EVENT_TOGGLE_TOOLTIP: 'event-listener:toggle-tooltip',
     EVENT_TOGGLE_POPUP: 'event-listener:toggle-popup',
+    EVENT_SEND_MESSAGE: 'event-listener:send-message',
+
     STATE_CHANGE: 'state:change',
+    STATE_CHANGE_MESSAGES: 'state:change-messages',
 
     EVENT_CREATE_CHAT_CLICKED: 'event-listener:create-chat-clicked',
     EVENT_DELETE_CHAT_CLICKED: 'event-listener:delete-chat-clicked',
+    EVENT_SELECT_CHAT_CLICKED: 'event-listener:select-chat-clicked',
     EVENT_ADD_USER_CLICKED: 'event-listener:add-user-clicked',
-    EVENT_DELETE_USER_CLICKED: 'event-listener:delete-user-clicked'
+    EVENT_DELETE_USER_CLICKED: 'event-listener:delete-user-clicked',
+    EVENT_SEND_MESSAGE_CLICKED: 'event-listener:send-message-clicked'
   };
 
   private static __instance: ChatController;
@@ -53,6 +76,7 @@ export default class ChatController extends ComponentController {
   private isCreatingChat: boolean;
   private isAddingUser: boolean;
   private searchParams: Record<string, unknown>;
+  sockets: { [key: number] : WebSocketService };
 
   constructor() {
     super(Chat, props.chatProps);
@@ -66,6 +90,7 @@ export default class ChatController extends ComponentController {
     this.isAddingUser = false;
     this.isDeletingUser = false;
     this.searchParams = {};
+    this.sockets = {};
   }
 
   emitListeners(): void {
@@ -76,6 +101,7 @@ export default class ChatController extends ComponentController {
     globalEventBus.emit(ChatController.EVENTS.EVENT_DELETE_USER);
     globalEventBus.emit(ChatController.EVENTS.EVENT_TOGGLE_TOOLTIP);
     globalEventBus.emit(ChatController.EVENTS.EVENT_TOGGLE_POPUP);
+    globalEventBus.emit(ChatController.EVENTS.EVENT_SEND_MESSAGE);
   }
 
   addListeners(): void {
@@ -87,6 +113,10 @@ export default class ChatController extends ComponentController {
       ($form: HTMLFormElement) => {
         return this.createChat($form);
       });
+    globalEventBus.on(ChatController.EVENTS.EVENT_SELECT_CHAT_CLICKED,
+      (chatId: string) => {
+        return this.selectChat.call(this, parseInt(chatId, 10));
+      });
     globalEventBus.on(ChatController.EVENTS.EVENT_ADD_USER_CLICKED,
       ($form: HTMLFormElement) => {
         return this.addUser($form);
@@ -95,12 +125,25 @@ export default class ChatController extends ComponentController {
       ($form: HTMLFormElement) => {
         return this.deleteUser($form);
       });
+    globalEventBus.on(ChatController.EVENTS.EVENT_SEND_MESSAGE_CLICKED,
+      ($form: HTMLFormElement) => {
+      if (globalStore.state.activeChat) {
+        return this.sendMessage($form);
+      }
+    });
   }
 
   async updateProps(): Promise<void> {
     globalEventBus.on(ChatController.EVENTS.STATE_CHANGE, () => {
       return;
     });
+    globalEventBus.on(ChatController.EVENTS.STATE_CHANGE_MESSAGES, () => {
+      if (globalStore.state.activeChat) {
+        const chatId = globalStore.state.activeChat;
+        this.updateDialog.call(this, chatId);
+      }
+    });
+
     await this.getChats();
     await this.getUsers();
   }
@@ -183,16 +226,18 @@ export default class ChatController extends ComponentController {
 
   async getChats(): Promise<void> {
     await ChatAPI.update()
-      .then((response) => {
+      .then(async (response) => {
         const newProps = JSON.parse(response.response);
         if (!newProps.length) {
           return;
         }
+        // open websocket connections to every chats
         this.updateChatList(newProps);
-        this.openLastChat(newProps[newProps.length - 1]);
-        globalStore.dispatch('openChat', {
-          id: newProps[newProps.length - 1]?.id
-        });
+        await this.connectWebSocket(newProps);
+
+        globalEventBus.emit(ChatController.EVENTS.EVENT_SELECT_CHAT);
+        globalStore.dispatch('setChats', newProps);
+
       })
       .catch((response) => {
         notify({
@@ -202,17 +247,44 @@ export default class ChatController extends ComponentController {
       });
   }
 
-  openLastChat(chatProps: {
-    id: number;
-    title: string;
-    avatar: string;
-    created_by: number;
-  }): void {
-    if (typeof chatProps.id === 'undefined') {
+  async connectWebSocket(chatProps: chatProp[]): Promise<void> {
+    if (chatProps.length === 0) {
       return;
     }
+
+    const user = await getUserInfo();
+
+    if (!user) {
+      return;
+    }
+
+    globalStore.dispatch('setUser', user);
+
+    for (const chat of chatProps) {
+      const token = await ChatAPI.getToken(chat.id)
+        .then(({ response }) => {
+          return JSON.parse(response).token;
+        });
+
+      this.sockets[chat.id] = new WebSocketService(
+        user.id as number,
+        chat.id,
+        token
+      );
+
+      this.sockets[chat.id].connect();
+    }
+  }
+
+  openChat(chat: chatProp): void {
+    if (typeof chat.id === 'undefined') {
+      return;
+    }
+    globalStore.dispatch('setActiveChat', chat.id);
+
+    console.log(`open chat ${JSON.stringify(chat)}`);
     const newInputDeleteChatProps = {...inputDeleteChatProps};
-    newInputDeleteChatProps.value = chatProps.id.toString();
+    newInputDeleteChatProps.value = chat.id.toString();
     const newPopupDeleteChatProps = {...popupDeleteChatProps};
     newPopupDeleteChatProps.input = new Input(newInputDeleteChatProps).getContent().innerHTML;
     const newPopupChatDeleteProps = new Popup(newPopupDeleteChatProps).getContent().innerHTML;
@@ -221,7 +293,7 @@ export default class ChatController extends ComponentController {
       popupChatDelete: newPopupChatDeleteProps,
       header: {
         person: {
-          name: chatProps.title
+          name: chat.title
         }
       }
     });
@@ -275,7 +347,7 @@ export default class ChatController extends ComponentController {
       });
       return;
     }
-    const chatId = (globalStore.state.lastOpenedChat as Record<string, unknown>)?.id;
+    const chatId = globalStore.state.activeChat;
     const user = users.filter((user) => user.login === this.searchParams.login);
     const userData = {
       users: [user[0].id],
@@ -303,10 +375,16 @@ export default class ChatController extends ComponentController {
   }
 
   async getUsers(): Promise<void> {
-    const chatId = (globalStore.state.lastOpenedChat as Record<string, unknown>)?.id as number | string;
+    if (!globalStore.state.activeChat) {
+      return;
+    }
+
+    const chatId = globalStore.state.activeChat as number;
+
     if (!chatId) {
       return;
     }
+
     const users = await UserChatAPI.request({id: chatId})
       .then((response) => {
         return JSON.parse(response.response);
@@ -353,7 +431,7 @@ export default class ChatController extends ComponentController {
       return;
     }
     const [{id}] = user;
-    const chatId = (globalStore.state.lastOpenedChat as Record<string, unknown>)?.id;
+    const chatId = globalStore.state.lastOpenedChat;
     UserChatAPI.delete({
       data: {
         users: [id],
@@ -379,4 +457,72 @@ export default class ChatController extends ComponentController {
         this.isDeletingUser = false;
       });
   }
+
+  selectChat(id: number): void {
+    const chat: chatProp | undefined = (globalStore.state.chats as []).find((chat: chatProp) => chat.id === id);
+    if (typeof chat !== 'undefined') {
+      this.openChat(chat);
+      this.updateDialog((chat as chatProp).id);
+    }
+  }
+
+  sendMessage($form: HTMLFormElement): void {
+    const text = $form.querySelector('input')?.value.trim();
+    if (typeof text === 'undefined' || text.length === 0) {
+      return;
+    }
+    const chatId = globalStore.state.activeChat as number;
+    this.sockets[chatId].send(text);
+  }
+
+  updateDialog(id: number): void {
+    const messages = (globalStore.state.messages as messageDataProp[]).filter((message) => message.id === id);
+
+    const isEmpty = typeof messages === 'undefined'
+      || messages.length === 0;
+
+    if (isEmpty) {
+      return;
+    }
+
+    const newDialogProps: MessageProps[] = [];
+    let list: Record<string, unknown>[] = [];
+
+    messages.forEach((item) => {
+      list = [...item.list, ...list];
+    });
+
+    list.forEach((message: Record<string, unknown>) => {
+      const prop = {...dialogProps};
+      const isCurrentUser = (globalStore.state.user as Record<string, unknown>).id === message.userId
+        || message['user_id'] === null;
+      if ((message.content as string).trim().length === 0) {
+        return;
+      }
+
+      prop.message.content = (message.content as string).trim();
+
+      if (!isCurrentUser) {
+        prop.from = true;
+        prop.position.className = 'message--left';
+        prop.message.className = 'message--from';
+      } else {
+        prop.from = false;
+        prop.position.className = 'message--right';
+        prop.message.className = 'message--yours';
+      }
+      console.log(message['user_id'], message['userId']);
+      newDialogProps.push(cloneDeep(prop));
+    });
+
+    this.block?.setProps({
+      dialog: concatMessage(newDialogProps)
+    });
+  }
 }
+
+
+// что делать с user_id - пока ничего - проблема на бэке, надо описать
+// таймер, чтобы соединение не оборвалось + экспериментально выставлено 1 мин
+// cloneDeep отрефакторить +
+// проверить функциональность добавления/удаления всего и вся - вроде норм, но надо проверить
