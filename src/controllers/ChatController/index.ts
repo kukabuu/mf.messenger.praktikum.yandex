@@ -282,7 +282,6 @@ export default class ChatController extends ComponentController {
     }
     globalStore.dispatch('setActiveChat', chat.id);
 
-    console.log(`open chat ${JSON.stringify(chat)}`);
     const newInputDeleteChatProps = {...inputDeleteChatProps};
     newInputDeleteChatProps.value = chat.id.toString();
     const newPopupDeleteChatProps = {...popupDeleteChatProps};
@@ -511,7 +510,6 @@ export default class ChatController extends ComponentController {
         prop.position.className = 'message--right';
         prop.message.className = 'message--yours';
       }
-      console.log(message['user_id'], message['userId']);
       newDialogProps.push(cloneDeep(prop));
     });
 
