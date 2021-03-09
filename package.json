@@ -72,7 +72,7 @@
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "eslint --config .eslintrc src"
+      "eslint"
     ],
     "*.less": [
       "stylelint --config .stylelintrc --syntax=less src"
