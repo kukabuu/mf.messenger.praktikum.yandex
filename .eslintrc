@@ -11,16 +11,6 @@
   ],
   "rules": {
     "semi": ["error", "always"],
-    "indent": "off",
-    "max-len": "off",
-    "require-jsdoc": "off",
-    "comma-dangle": "off",
-    "camelcase": "off",
-    "no-unused-vars": "off",
-    "arrow-parens": "off",
-    "guard-for-in": "off",
-    "new-cap": "off",
-    "keyword-spacing": "off",
     "@typescript-eslint/member-delimiter-style": [
       "error",
       {

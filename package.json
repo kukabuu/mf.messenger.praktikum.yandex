@@ -71,12 +71,8 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts}": [
-      "eslint"
-    ],
-    "*.less": [
-      "stylelint --config .stylelintrc --syntax=less src"
-    ]
+    "*.{js,ts}": "eslint",
+    "*.less": "stylelint --syntax=less"
   },
   "dependencies": {}
 }
