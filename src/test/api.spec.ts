@@ -43,7 +43,8 @@ describe('API', function () {
       httpAPI.get('/');
       sinon.assert.calledWith(
         httpAPI.request,
-        '/', {method: METHOD.GET}
+        '/',
+        {method: METHOD.GET}
         );
     });
 
@@ -55,7 +56,8 @@ describe('API', function () {
       httpAPI.get(url, {data: defaultData});
       sinon.assert.calledWith(
         httpAPI.request,
-        `${stringifiedData}`, {data: defaultData, method: METHOD.GET}
+        `${stringifiedData}`,
+        {data: defaultData, method: METHOD.GET}
         );
     });
 
@@ -66,7 +68,8 @@ describe('API', function () {
       httpAPI.post(url, {data: defaultData});
       sinon.assert.calledWith(
         httpAPI.request,
-        `${url}`, {data: defaultData, method: METHOD.POST}
+        `${url}`,
+        {data: defaultData, method: METHOD.POST}
       );
     });
 
@@ -77,7 +80,8 @@ describe('API', function () {
       httpAPI.post(url);
       sinon.assert.calledWith(
         httpAPI.request,
-        `${url}`, {method: METHOD.POST}
+        `${url}`,
+        {method: METHOD.POST}
       );
     });
 
@@ -88,7 +92,8 @@ describe('API', function () {
       httpAPI.put(url, {data: defaultData});
       sinon.assert.calledWith(
         httpAPI.request,
-        `${url}`, {data: defaultData, method: METHOD.PUT}
+        `${url}`,
+        {data: defaultData, method: METHOD.PUT}
       );
     });
 
@@ -99,7 +104,8 @@ describe('API', function () {
       httpAPI.put(url);
       sinon.assert.calledWith(
         httpAPI.request,
-        `${url}`, {method: METHOD.PUT}
+        `${url}`,
+        {method: METHOD.PUT}
       );
     });
 
@@ -110,7 +116,8 @@ describe('API', function () {
       httpAPI.delete(url, {data: defaultData});
       sinon.assert.calledWith(
         httpAPI.request,
-        `${url}`, {data: defaultData, method: METHOD.DELETE}
+        `${url}`,
+        {data: defaultData, method: METHOD.DELETE}
       );
     });
 
@@ -121,7 +128,8 @@ describe('API', function () {
       httpAPI.delete(url);
       sinon.assert.calledWith(
         httpAPI.request,
-        `${url}`, {method: METHOD.DELETE}
+        `${url}`,
+        {method: METHOD.DELETE}
       );
     });
 
