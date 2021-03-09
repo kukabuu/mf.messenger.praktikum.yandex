@@ -493,8 +493,10 @@ export default class ChatController extends ComponentController {
 
     list.forEach((message: Record<string, unknown>) => {
       const prop = {...dialogProps};
-      const isCurrentUser = (globalStore.state.user as Record<string, unknown>).id === message.userId
+      const userId = message['user_id'] || message.userId;
+      const isCurrentUser = (globalStore.state.user as Record<string, unknown>).id === userId
         || message['user_id'] === null;
+
       if ((message.content as string).trim().length === 0) {
         return;
       }
