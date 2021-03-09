@@ -8,12 +8,26 @@ https://vigilant-goldwasser-886a78.netlify.app
 https://glacial-atoll-24982.herokuapp.com
 
 
-## Установка
+## Скрипты
 * `npm start` - запуск версии для разработчика на `localhost:3000`
 * `npm run build` - запуск сборки приложения для прода
 * `npm test` - запуск тестов
 * `npm run deploy` - деплой на heroku
-* `npm run verify` - запуск проверки при прекоммит хуке
+
+## Прекоммит
+Прекоммит настроен через husky. Сначала использовала 5 версию, но с ней не взлетело. Пришло установить 4 версию.
+Прекоммит настроен для less, js и ts файлов.
+```
+"husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint",
+    "*.less": "stylelint --syntax=less"
+  },
+  ```
 
 ## Сборка
 Сборка проекта осуществляется webpack 5. Конфиг для прода и разработки `webpack.config.js`.
@@ -124,7 +138,7 @@ https://glacial-atoll-24982.herokuapp.com
 Эти less-модули подключаются к каждой странице. Стили лежат в `./src/less`, преобразуются в css в `./build/style-[hash].css`.
 
 ### Проверка кода
-Для проверки кода подключен eslint, для проверки стилей - stylelint. В webpack.config.js добавлены для них плагины.
+Для проверки кода подключен eslint, для проверки стилей - stylelint. В webpack.config.js добавлены для них плагины. Настроен прекоммит хук.
 
 ### Express
 Настроен Express-сервер на раздачу статики из `./build`.

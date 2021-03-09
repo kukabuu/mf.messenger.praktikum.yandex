@@ -1,7 +1,7 @@
 const sinon = require('sinon');
 const { JSDOM } = require('jsdom');
 const Handlebars = require('handlebars');
-alksdjalksjdljaslkdjkalsjdakljdklasjd()()()()()))))))
+
 const dom = new JSDOM(
   '<!DOCTYPE html><html><head></head><body></body></html>',
   {
