@@ -1,6 +1,7 @@
 const sinon = require('sinon');
 const { JSDOM } = require('jsdom');
-const Handlebars = require('Handlebars');
+const Handlebars = require('handlebars');
+
 const dom = new JSDOM(
   '<!DOCTYPE html><html><head></head><body></body></html>',
   {

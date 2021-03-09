@@ -2,8 +2,15 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "import"
   ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -11,6 +18,12 @@
   ],
   "rules": {
     "semi": ["error", "always"],
+    "global-require": "error",
+    "no-global-assign": "warn",
+    "import/no-unresolved": [
+      2,
+      { "caseSensitive": true }
+    ],
     "@typescript-eslint/member-delimiter-style": [
       "error",
       {
@@ -24,5 +37,20 @@
         }
       }
     ]
+  },
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }
