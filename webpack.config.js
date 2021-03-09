@@ -3,7 +3,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
@@ -23,7 +22,13 @@ module.exports = {
     rules: [
       {
         test:/\.js$/,
-        use: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            extends: 'babel.config.browser.js',
+            ignore: './src/test'
+          }
+        },
         exclude: /node_modules/,
       },
       {
@@ -43,19 +48,13 @@ module.exports = {
         test: /\.(png|jpeg|jpg)/,
         type: 'asset/resource',
         generator: {
-          filename: 'assets/images/[hash][ext]'
+          filename: 'assets/images/[contenthash][ext]'
         }
       }
     ],
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new CopyPlugin({
-      patterns: [{
-        from: "static",
-        to: "build"
-      }],
-    }),
     new HtmlWebpackPlugin({
       template: './static/index.html',
       filename: 'index.html',
@@ -67,7 +66,7 @@ module.exports = {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: 'style-[hash].css',
+      filename: 'style-[contenthash].css',
     }),
     new ESLintPlugin({
       eslintPath: require.resolve('eslint'),
@@ -83,7 +82,7 @@ module.exports = {
     historyApiFallback: true,
     compress: true,
     writeToDisk: true,
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 3000,
   },
 };

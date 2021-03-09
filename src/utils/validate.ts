@@ -1,7 +1,7 @@
 import { addEventForChild } from './addEvent';
 
 const patterns = {
-  email: /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
+  email: /^.+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/i,
   phone: /^\+7\(9[0-9]{2}\)[0-9]{3}-[0-9]{2}-[0-9]{2}$/
 };
 
