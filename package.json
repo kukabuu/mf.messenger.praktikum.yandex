@@ -43,7 +43,7 @@
     "eslint": "7.19.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-webpack-plugin": "2.5.2",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "handlebars": "4.7.6",
     "html-webpack-plugin": "5.2.0",
     "husky": "4",
